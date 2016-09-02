@@ -1,8 +1,8 @@
-/* 
+/*
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-03-18 11:10:01
+* @Last Modified time: 2016-09-02 20:38:31
 */
 /**
  * webpack --display-error-details
@@ -25,29 +25,8 @@ var webpack = require('webpack');
 var path = require('path');
 var Pcnf = require('./webpack.plugin.cnf.js');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var glob = require('glob');
-var Q = require('q');
-
-// function getEntries(){
-// 	var entryObject = {};
-// 	var deferred = Q.defer();
-//     glob("public/resource/js/page/*.js", function (er, files) {
-//     	var reg = /\.*\/page\/(.*)\.js/;
-//      	files.map(function(path,index){
-//      		var entryName = path.match(reg)[1];
-//      		var entryPath = './'+path;
-//      		entryObject[entryName] = entryPath;
-//      		//console.log(entryObject);
-//      	});
-//      	deferred.resolve(entryObject);
-//     });
-//     return deferred.promise;
-// }
-
-// getEntries().then(function(data){
-// 	console.log(data);
-// });
-
+// var glob = require('glob');
+// var Q = require('q');
 
 module.exports = {
     context: __dirname,
@@ -77,7 +56,7 @@ module.exports = {
                 loader: "style!css!sass"
             },
             {
-                test: /\.(png|jpg|gif)$/, 
+                test: /\.(png|jpg|gif)$/,
                 loader: 'url-loader?limit=8192&name=./img/[name].[ext]'
             },
             {
@@ -135,7 +114,6 @@ module.exports = {
              'Rjs': 'public/resource/js',
              'Rcss': 'public/resource/css',
              'Rimg': 'public/resource/img',
-
         }
     },
     devServer: {
