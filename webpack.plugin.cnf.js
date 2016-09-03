@@ -2,17 +2,24 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-03 21:04:07
+* @Last Modified time: 2016-09-03 21:38:11
 */
 
 var webpack = require('webpack');
 var path = require('path');
-var cleanPlugin = require('clean-webpack-plugin');
+var CleanPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var TransferWebpackPlugin = require('transfer-webpack-plugin');
 
 
 module.exports = {
+	//文件拷贝插件
+	'transferWebpackPluginCnf' : new TransferWebpackPlugin([
+      // {from: path.resolve(__dirname,"app")},
+      // {from: path.resolve(__dirname,"public")},
+    ], path.resolve(__dirname,"static")),
+
 	//css 以文件类型引入插件
 	'extractTextPluginCnf' : new ExtractTextPlugin("[name].bundle.css",{
 	        //allChunks: false,
@@ -32,7 +39,7 @@ module.exports = {
 	'bannerPluginCnf' : new webpack.BannerPlugin('This file is created by lushijie'),
 
 	//下次打包清除上一次打包文件
-	'cleanPluginCnf' : new cleanPlugin(['static'], {
+	'cleanPluginCnf' : new CleanPlugin(['static'], {
 	  root: __dirname,
 	  verbose: true,
 	  dry: false

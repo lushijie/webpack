@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-03 21:23:14
+* @Last Modified time: 2016-09-03 21:33:34
 */
 /**
  * webpack --display-error-details
@@ -28,11 +28,11 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     //调试环境：使用 eval 方式可大幅提高持续构建效率
-    // devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-eval-source-map',
 
     //线上环境：sourcemap 没有列信息，使用 cheap 模式可以大幅提高 souremap 生成的效率
     //外联.map时，.map文件只会在F12开启时进行下载（sourceMap主要服务于调试），故推荐使用外联.map的形式。
-    devtool: 'cheap-module-source-map',
+    //devtool: 'cheap-module-source-map',
     context: __dirname,//基础目录（绝对路径），entry根据此路径进行解析
     //entry 情况1,
     //entry 为字符串，生成 common.bundle.js 与 main.bundle.js
@@ -108,6 +108,7 @@ module.exports = {
         Pcnf.commonsChunkPluginCnf,
         Pcnf.minChunkSizePluginCnf,
         Pcnf.hotModuleReplacementPluginCnf,
+        Pcnf.transferWebpackPluginCnf
         // new HtmlWebpackPlugin({
         //     filename: 'home.html',
         //     title: 'halo',
