@@ -1,2 +1,3 @@
 /*! This file is created by lushijie */
 webpackJsonp([0],[function(o,s,n){"use strict";n(1),n(6),console.log("This is admin.js")},,,,,,function(o,s,n){var t=n(7);"string"==typeof t&&(t=[[o.id,t,""]]);var c=n(5)(t,{});t.locals&&(o.exports=t.locals),t.locals||o.hot.accept(7,function(){var s=n(7);"string"==typeof s&&(s=[[o.id,s,""]]),c(s)}),o.hot.dispose(function(){c()})},function(o,s,n){s=o.exports=n(4)(),s.push([o.id,"body{background-color:#888}",""])}]);
+//# sourceMappingURL=admin.bundle.js.map
