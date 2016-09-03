@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-03 11:39:22
+* @Last Modified time: 2016-09-03 21:04:10
 */
 /**
  * webpack --display-error-details
@@ -42,7 +42,7 @@ module.exports = {
         home: './public/resource/js/page/home.js',
         admin: './public/resource/js/page/admin.js',
         ventor: [
-            // 测试引入jQuery
+            // 引入jQuery
             'jquery'
         ]
     },
@@ -95,7 +95,6 @@ module.exports = {
         ]
     },
     plugins: [
-        Pcnf.definePluginCnf,
         Pcnf.cleanPluginCnf,
         Pcnf.bannerPluginCnf,
         Pcnf.uglifyJsPluginCnf,
@@ -158,6 +157,6 @@ module.exports = {
                 secure: false,//optional for https
                 changeOrigin: true,
               }
-            }
+        }
     }
 };
