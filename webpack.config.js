@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-02 20:38:31
+* @Last Modified time: 2016-09-02 21:17:30
 */
 /**
  * webpack --display-error-details
@@ -25,8 +25,6 @@ var webpack = require('webpack');
 var path = require('path');
 var Pcnf = require('./webpack.plugin.cnf.js');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-// var glob = require('glob');
-// var Q = require('q');
 
 module.exports = {
     context: __dirname,
@@ -35,7 +33,7 @@ module.exports = {
         admin: './public/resource/js/page/admin.js'
     },
     output: {
-        //publicPath: 'http://7xq985.com1.z0.glb.clouddn.com/',
+        // publicPath: '/static/',
         publicPath: '/static/',
         path: 'builds',
         filename: '[name].bundle.js',
@@ -79,39 +77,38 @@ module.exports = {
         Pcnf.commonsChunkPluginCnf,
         Pcnf.minChunkSizePluginCnf,
         Pcnf.hotModuleReplacementPluginCnf,
-
-        new HtmlWebpackPlugin({
-            filename: 'home.html',
-            title: 'halo',
-            hash: true,
-            template: path.resolve(__dirname,'app/views/template/home.html'),
-            favicon:path.resolve(__dirname,'public/favicon.ico'),
-            minify:{
-                removeComments:false,
-                collapseWhitespace:false
-            },
-            chunks: ['common','home']
-        }),
-        new HtmlWebpackPlugin({
-            //inject: 'body' ,
-            filename: 'admin.html',
-            title: 'halo',
-            hash: true,
-            // template: path.resolve(__dirname,'public/tpl.html'),
-            favicon:path.resolve(__dirname,'public/favicon.ico'),
-            minify:{
-                removeComments:false,
-                collapseWhitespace:false
-            },
-            chunks: ['common','admin']
-        })
+        // new HtmlWebpackPlugin({
+        //     filename: 'home.html',
+        //     title: 'halo',
+        //     hash: true,
+        //     template: path.resolve(__dirname,'app/views/home/index.html'),
+        //     favicon:path.resolve(__dirname,'public/favicon.ico'),
+        //     minify:{
+        //         removeComments:false,
+        //         collapseWhitespace:false
+        //     },
+        //     chunks: ['common','home']
+        // }),
+        // new HtmlWebpackPlugin({
+        //     //inject: 'body' ,
+        //     filename: 'admin.html',
+        //     title: 'halo',
+        //     hash: true,
+        //     // template: path.resolve(__dirname,'public/tpl.html'),
+        //     favicon:path.resolve(__dirname,'public/favicon.ico'),
+        //     minify:{
+        //         removeComments:false,
+        //         collapseWhitespace:false
+        //     },
+        //     chunks: ['common','admin']
+        // })
     ],
     resolve:{
         root: [
             path.resolve(__dirname)
         ],
         alias:{
-             'Rjs': 'public/resource/js',
+             'Rjs': 'public/resource/js',//别名，可在引用的时候使用缩写
              'Rcss': 'public/resource/css',
              'Rimg': 'public/resource/img',
         }
