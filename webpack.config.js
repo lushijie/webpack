@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-02 21:17:30
+* @Last Modified time: 2016-09-03 11:39:22
 */
 /**
  * webpack --display-error-details
@@ -27,34 +27,59 @@ var Pcnf = require('./webpack.plugin.cnf.js');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    context: __dirname,
+    context: __dirname,//基础目录（绝对路径），entry根据此路径进行解析
+    //entry 情况1,
+    //entry 为字符串，生成 common.bundle.js 与 main.bundle.js
+    //entry: './public/resource/js/page/home.js',
+
+    //entry 情况2
+    //entry 如果为一个数组，数组中的文件会打包在一起融合到main.bundle.js进入boot，生成common.bundle.js与main.bundle.js
+    entry: ['./public/resource/js/page/home.js','./public/resource/js/page/admin.js'],
+
+    //entry 情况3
+    //entry为对象,生成common.bundle.js 与 home.bundle.js 与 admin.bundle.js(home,admin为对象的key)
     entry: {
         home: './public/resource/js/page/home.js',
-        admin: './public/resource/js/page/admin.js'
+        admin: './public/resource/js/page/admin.js',
+        ventor: [
+            // 测试引入jQuery
+            'jquery'
+        ]
     },
     output: {
-        // publicPath: '/static/',
-        publicPath: '/static/',
-        path: 'builds',
-        filename: '[name].bundle.js',
+        publicPath: '/static/',//webpack-dev-server会使用改路径寻找output 文件
+        path: 'static',// 正式部署时打包进入的文件夹名称
+        filename: '[name].bundle.js',//控制的是除common.bundle.js（改文件名就是如此）之外的其他模块的文件名,
+        //当时entry使用对象形式时，[hash]不可以使用，[id]、[chunkhash]与[name]可以使用
         chunkFilename: '[name].chunk.js'
     },
     module: {
-        preLoaders: [],
+        preLoaders: [
+            {
+              //babel eslint 校验
+              test: /js\/(page|common)\/.*?\.js?$/,
+              exclude: /node_modules/,
+              loader: 'eslint-loader'
+            }
+        ],
         loaders: [
             {
                 test:/\.css$/,
-                // loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+                //1.css文件外联方式实现
                 // loader: Pcnf.extractTextPluginCnf.extract(['css'])
+                //2.css文件内联方式实现
                 loader: "style!css"
             },
             {
                 test:/\.scss$/,
+                //1.scss 样式文件外联文件形式
                 // loader: Pcnf.extractTextPluginCnf.extract(['css','sass'])
+                //2.scss 样式文件内敛方式实现
                 loader: "style!css!sass"
             },
             {
                 test: /\.(png|jpg|gif)$/,
+                //图片如果小于8192kb将会以base64形式存在，否则产生图片文件
                 loader: 'url-loader?limit=8192&name=./img/[name].[ext]'
             },
             {
@@ -63,7 +88,8 @@ module.exports = {
                 exclude: /node_modules/,
                 include: __dirname + '/public/resource/js',
                 query: {
-                    presets: ['es2015']
+                    cacheDirectory: true,
+                    presets: ['es2015', 'stage-0']
                 }
             }
         ]
@@ -73,7 +99,7 @@ module.exports = {
         Pcnf.cleanPluginCnf,
         Pcnf.bannerPluginCnf,
         Pcnf.uglifyJsPluginCnf,
-        // Pcnf.extractTextPluginCnf,
+        Pcnf.extractTextPluginCnf,
         Pcnf.commonsChunkPluginCnf,
         Pcnf.minChunkSizePluginCnf,
         Pcnf.hotModuleReplacementPluginCnf,
@@ -107,6 +133,7 @@ module.exports = {
         root: [
             path.resolve(__dirname)
         ],
+        extensions: ['', '.js', '.jsx'],//引用时遇到这些后缀结束的文件可以不加后缀名
         alias:{
              'Rjs': 'public/resource/js',//别名，可在引用的时候使用缩写
              'Rcss': 'public/resource/css',
@@ -114,22 +141,23 @@ module.exports = {
         }
     },
     devServer: {
-        // stats: {
-        //     cached: false,
-        //     colors: true
-        // },
-        // contentBase: './builds/',
+        stats: {
+            cached: false,
+            colors: true
+        },
+        contentBase: __dirname,//相当于整个devserver的跟目录，默认情况下等于__dirname
         //devtool: 'eval',
         hot: true,
         inline: true,
         port: 8080,
-        host: '0.0.0.0'
-    },
-    sassLoader: {
-        includePaths:  __dirname + '/src'
+        host: '0.0.0.0',
+        proxy: {
+              "/proxy": {
+                ignorePath: true,
+                target: "http://wan.sogou.com",
+                secure: false,//optional for https
+                changeOrigin: true,
+              }
+            }
     }
-    //Eslint config
-    // eslint: {
-    //     configFile: '.eslintrc' //Rules for eslint
-    // }
 };

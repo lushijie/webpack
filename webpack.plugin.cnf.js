@@ -1,8 +1,8 @@
-/* 
+/*
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-03-04 17:51:37
+* @Last Modified time: 2016-09-03 11:17:53
 */
 
 var webpack = require('webpack');
@@ -29,9 +29,9 @@ module.exports = {
 	    __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false'))
 	}),
 	'bannerPluginCnf' : new webpack.BannerPlugin('This file is created by lushijie'),
-	'cleanPluginCnf' : new cleanPlugin(['builds'], {
+	'cleanPluginCnf' : new cleanPlugin(['static'], {
 	  root: __dirname,
-	  verbose: true, 
+	  verbose: true,
 	  dry: false
 	}),
 	'commonsChunkPluginCnf' : new webpack.optimize.CommonsChunkPlugin({
@@ -44,7 +44,4 @@ module.exports = {
 	    minChunkSize: 51200, // ~50kb
 	}),
 	'hotModuleReplacementPluginCnf' : new webpack.HotModuleReplacementPlugin()
-
-
-
 }
