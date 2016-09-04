@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-04 11:10:22
+* @Last Modified time: 2016-09-04 11:46:52
 */
 
 var webpack = require('webpack');
@@ -12,8 +12,23 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var TransferWebpackPlugin = require('transfer-webpack-plugin');
 
+var CONST_INJECT = {
+	DEV:{
+		a: 123,
+		b: 345
+	},
+	PUB:{
+		c: 678,
+		d: 900
+	}
+}
 
 module.exports = {
+	// definePlugin 会把定义的string 变量插入到Js代码中
+	'definePluginCnf' : new webpack.DefinePlugin({
+	  VAR_INJECT: CONST_INJECT[JSON.parse(process.env.NODE_DEV) ? 'DEV':'PUB']
+	}),
+
 	//文件拷贝插件
 	'transferWebpackPluginCnf' : new TransferWebpackPlugin([
       // {from: path.resolve(__dirname,"app")},

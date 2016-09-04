@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --progress --profile",
-    "build": "webpack --progress --profile"
+    "dev": "NODE_DEV=true  webpack-dev-server --progress --profile",
+    "debug": "webpack",
+    "publish": "webpack --progress --profile"
   },
   "author": "",
   "license": "ISC",
