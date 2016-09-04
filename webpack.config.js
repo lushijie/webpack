@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-04 11:19:31
+* @Last Modified time: 2016-09-04 12:18:42
 */
 /**
  * webpack --display-error-details
@@ -47,10 +47,11 @@ module.exports = {
     entry: {
         home: './public/resource/js/page/home.js',
         admin: './public/resource/js/page/admin.js',
-        ventor: [
-            // 引入jQuery
-            'jquery'
-        ]
+        //ventor has problem why?
+        // ventor: [
+        //     // 引入jQuery
+        //     'jquery'
+        // ]
     },
     output: {
         publicPath: '/static/',//webpack-dev-server会使用改路径寻找output 文件
@@ -111,7 +112,10 @@ module.exports = {
         Pcnf.minChunkSizePluginCnf,
         Pcnf.hotModuleReplacementPluginCnf,
         Pcnf.transferWebpackPluginCnf,
-        Pcnf.dedupePluginCnf
+        Pcnf.dedupePluginCnf,
+        Pcnf.providePluginCnf
+
+
         // new HtmlWebpackPlugin({
         //     filename: 'home.html',
         //     title: 'halo',

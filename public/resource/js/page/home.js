@@ -2,11 +2,12 @@
 * @Author: lushijie
 * @Date:   2016-03-03 14:30:52
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-04 11:45:02
+* @Last Modified time: 2016-09-04 12:18:39
 */
 import 'Rjs/common/base.js';
 import 'Rcss/page/home.scss';
-import $ from 'jquery';
+// 引入 node_module中的类库,可以使用providePlugin引入
+//import $ from 'jquery';
 
 console.log('jquery引入测试',$(window).width());
 

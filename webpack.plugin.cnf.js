@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-04 12:05:48
+* @Last Modified time: 2016-09-04 12:17:37
 */
 
 var webpack = require('webpack');
@@ -25,9 +25,16 @@ var CONST_INJECT = {
 }
 
 module.exports = {
+
+	//引入全局的方案
+	//可以jquery变成全局变量，不用在自己文件require('jquery')了
+	'providePluginCnf' : new webpack.ProvidePlugin({
+	    $: 'jquery'
+	}),
+
 	// definePlugin 会把定义的string 变量插入到Js代码中
 	'definePluginCnf' : new webpack.DefinePlugin({
-	  VAR_INJECT: CONST_INJECT[JSON.parse(process.env.NODE_DEV) ? 'DEV':'PUB']
+	  VAR_INJECT: CONST_INJECT[JSON.parse(process.env.NODE_DEV || 'true') ? 'DEV':'PUB']
 	}),
 
 	//文件拷贝插件
