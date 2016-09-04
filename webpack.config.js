@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-04 15:49:16
+* @Last Modified time: 2016-09-04 16:11:23
 */
 /**
  * webpack --display-error-details
@@ -10,7 +10,6 @@
  * webpack --progress --colors --watch
 
  * webpack 来执行一次开发的编译
- * webpack -p for building once for production (minification)
  * webpack -p 来针对发布环境编译(压缩代码)
  * webpack --watch 来进行开发过程持续的增量编译(飞快地!)
  * webpack -d 来生成 SourceMaps
@@ -19,12 +18,14 @@
  * webpack-dev-server --inline -b 0.0.0.0
  * webpack-dev-server --iframe -b 0.0.0.0
  *
- * //var production = process.env.NODE_ENV === 'production';
  */
 var webpack = require('webpack');
 var path = require('path');
 var Pcnf = require('./webpack.plugin.cnf.js');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+
+console.log('current ENV:',JSON.parse(process.env.NODE_ENV));
+
 
 module.exports = {
     //调试环境：使用 eval 方式可大幅提高持续构建效率
