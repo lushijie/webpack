@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-04 12:17:37
+* @Last Modified time: 2016-09-04 15:51:37
 */
 
 var webpack = require('webpack');
@@ -26,31 +26,31 @@ var CONST_INJECT = {
 
 module.exports = {
 
-	//引入全局的方案
+	//jquery(其他类库亦如此)引入全局的方案
 	//可以jquery变成全局变量，不用在自己文件require('jquery')了
-	'providePluginCnf' : new webpack.ProvidePlugin({
+	'providePluginCnf': new webpack.ProvidePlugin({
 	    $: 'jquery'
 	}),
 
 	// definePlugin 会把定义的string 变量插入到Js代码中
-	'definePluginCnf' : new webpack.DefinePlugin({
+	'definePluginCnf': new webpack.DefinePlugin({
 	  VAR_INJECT: CONST_INJECT[JSON.parse(process.env.NODE_DEV || 'true') ? 'DEV':'PUB']
 	}),
 
 	//文件拷贝插件
-	'transferWebpackPluginCnf' : new TransferWebpackPlugin([
+	'transferWebpackPluginCnf': new TransferWebpackPlugin([
       // {from: path.resolve(__dirname,"app")},
       // {from: path.resolve(__dirname,"public")},
-    ], path.resolve(__dirname,"static")),
+    ], path.resolve(__dirname,"dist")),
 
 	//css 以文件类型引入插件
-	'extractTextPluginCnf' : new ExtractTextPlugin("[name].bundle.css",{
+	'extractTextPluginCnf': new ExtractTextPlugin("[name].bundle.css",{
 	        //allChunks: false,
 	        //disable: false
 	}),
 
 	 //js压缩组件
-	'uglifyJsPluginCnf' : new webpack.optimize.UglifyJsPlugin({
+	'uglifyJsPluginCnf': new webpack.optimize.UglifyJsPlugin({
 	    compress: {
 	        //supresses warnings, usually from module minification
 	        warnings: false
@@ -59,17 +59,17 @@ module.exports = {
 	}),
 
 	//为打包之后的各个文件添加文件说明头部
-	'bannerPluginCnf' : new webpack.BannerPlugin('This file is created by lushijie'),
+	'bannerPluginCnf': new webpack.BannerPlugin('This file is created by lushijie'),
 
 	//下次打包清除上一次打包文件
-	'cleanPluginCnf' : new CleanPlugin(['static'], {
+	'cleanPluginCnf': new CleanPlugin(['dist'], {
 	  root: __dirname,
 	  verbose: true,
 	  dry: false
 	}),
 
 	//提取common文件模块
-	'commonsChunkPluginCnf' : new webpack.optimize.CommonsChunkPlugin({
+	'commonsChunkPluginCnf': new webpack.optimize.CommonsChunkPlugin({
 	    name: "common",
 	    filename: "common.bundle.js",
 	    //最少两个模块中存在才进行抽离common
@@ -78,14 +78,37 @@ module.exports = {
 	    // chunks:['home','admin']
 	}),
 
+	// This plugin prevents Webpack from creating chunks
+	// that would be too small to be worth loading separately
 	//最小分块大小
-	'minChunkSizePluginCnf' : new webpack.optimize.MinChunkSizePlugin({
+	'minChunkSizePluginCnf': new webpack.optimize.MinChunkSizePlugin({
 	    minChunkSize: 51200, // ~50kb
 	}),
 
 	//js重新编译动态刷新浏览器插件
-	'hotModuleReplacementPluginCnf' : new webpack.HotModuleReplacementPlugin(),
+	'hotModuleReplacementPluginCnf': new webpack.HotModuleReplacementPlugin(),
 
 	// 把相似的chunks和files合并来更好的缓存
-	'dedupePluginCnf' : new webpack.optimize.DedupePlugin()
+	'dedupePluginCnf': new webpack.optimize.DedupePlugin(),
+
+	//simplifies creation of HTML files to serve your webpack bundles
+	//如果有多个页面需要写多个htmlWebPackPluginCnf
+	'htmlWebPackPluginCnf': new HtmlWebpackPlugin({
+        // 访问地址 http://127.0.0.1:8080/dist/views/home.html
+        filename: 'views/home.html',
+        title: 'halo',
+        hash: true,
+        //此时不注入相关的js,否则如果之前手动引入了js，可能导致重复引入
+        inject: false,
+        template: path.resolve(__dirname,'app/views/home/index.html'),
+        favicon:path.resolve(__dirname,'public/favicon.ico'),
+        minify:{
+            removeComments: false,
+            collapseWhitespace: false,
+            minifyCSS: false
+        },
+        //Allows you to add only some chunks (e.g. only the unit-test chunk)
+        chunks: ['common','home'],
+        //excludeChunks: ['','']
+    }),
 }

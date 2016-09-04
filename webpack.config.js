@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-04 12:18:42
+* @Last Modified time: 2016-09-04 15:49:16
 */
 /**
  * webpack --display-error-details
@@ -54,8 +54,8 @@ module.exports = {
         // ]
     },
     output: {
-        publicPath: '/static/',//webpack-dev-server会使用改路径寻找output 文件
-        path: 'static',// 正式部署时打包进入的文件夹名称
+        publicPath: '/dist/',//webpack-dev-server会使用改路径寻找output 文件
+        path: 'dist',// 正式部署时打包进入的文件夹名称
         filename: '[name].bundle.js',//控制的是除common.bundle.js（改文件名就是如此）之外的其他模块的文件名,
         //当时entry使用对象形式时，[hash]不可以使用，[id]、[chunkhash]与[name]可以使用
         chunkFilename: '[name].chunk.js'
@@ -113,34 +113,8 @@ module.exports = {
         Pcnf.hotModuleReplacementPluginCnf,
         Pcnf.transferWebpackPluginCnf,
         Pcnf.dedupePluginCnf,
-        Pcnf.providePluginCnf
-
-
-        // new HtmlWebpackPlugin({
-        //     filename: 'home.html',
-        //     title: 'halo',
-        //     hash: true,
-        //     template: path.resolve(__dirname,'app/views/home/index.html'),
-        //     favicon:path.resolve(__dirname,'public/favicon.ico'),
-        //     minify:{
-        //         removeComments:false,
-        //         collapseWhitespace:false
-        //     },
-        //     chunks: ['common','home']
-        // }),
-        // new HtmlWebpackPlugin({
-        //     //inject: 'body' ,
-        //     filename: 'admin.html',
-        //     title: 'halo',
-        //     hash: true,
-        //     // template: path.resolve(__dirname,'public/tpl.html'),
-        //     favicon:path.resolve(__dirname,'public/favicon.ico'),
-        //     minify:{
-        //         removeComments:false,
-        //         collapseWhitespace:false
-        //     },
-        //     chunks: ['common','admin']
-        // })
+        Pcnf.providePluginCnf,
+        //Pcnf.htmlWebPackPluginCnf
     ],
     resolve:{
         root: [
