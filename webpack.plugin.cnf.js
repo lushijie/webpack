@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-04 11:46:52
+* @Last Modified time: 2016-09-04 12:05:48
 */
 
 var webpack = require('webpack');
@@ -15,10 +15,11 @@ var TransferWebpackPlugin = require('transfer-webpack-plugin');
 var CONST_INJECT = {
 	DEV:{
 		a: 123,
-		b: 345
+		//替换规则是 API_URL = 后面的值，所以要添加 JSON.stringify
+		"API_URL": JSON.stringify('http://localhost:8080/bands'),
 	},
 	PUB:{
-		c: 678,
+		"API_URL": JSON.stringify('http://online:8080/bands'),
 		d: 900
 	}
 }
