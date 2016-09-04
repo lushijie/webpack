@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-03 21:33:34
+* @Last Modified time: 2016-09-03 21:50:06
 */
 /**
  * webpack --display-error-details
@@ -63,8 +63,9 @@ module.exports = {
         preLoaders: [
             {
               //babel eslint 校验
-              test: /js\/(page|common)\/.*?\.js?$/,
+              test: /\.(js|jsx)$/,
               exclude: /node_modules/,
+              include: [path.resolve(__dirname, "public/resource/js/page"),path.resolve(__dirname, "public/resource/js/common"),],
               loader: 'eslint-loader'
             }
         ],
@@ -108,7 +109,8 @@ module.exports = {
         Pcnf.commonsChunkPluginCnf,
         Pcnf.minChunkSizePluginCnf,
         Pcnf.hotModuleReplacementPluginCnf,
-        Pcnf.transferWebpackPluginCnf
+        Pcnf.transferWebpackPluginCnf,
+        Pcnf.dedupePluginCnf
         // new HtmlWebpackPlugin({
         //     filename: 'home.html',
         //     title: 'halo',

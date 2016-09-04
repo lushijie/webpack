@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-03 21:38:11
+* @Last Modified time: 2016-09-04 11:10:22
 */
 
 var webpack = require('webpack');
@@ -49,8 +49,9 @@ module.exports = {
 	'commonsChunkPluginCnf' : new webpack.optimize.CommonsChunkPlugin({
 	    name: "common",
 	    filename: "common.bundle.js",
+	    //最少两个模块中存在才进行抽离common
 	    minChunks: 2
-	    //指定common从哪些chunks中提取而来
+	    //指定common从哪些chunks中提取而来，(Only use these entries)
 	    // chunks:['home','admin']
 	}),
 
@@ -60,5 +61,8 @@ module.exports = {
 	}),
 
 	//js重新编译动态刷新浏览器插件
-	'hotModuleReplacementPluginCnf' : new webpack.HotModuleReplacementPlugin()
+	'hotModuleReplacementPluginCnf' : new webpack.HotModuleReplacementPlugin(),
+
+	// 把相似的chunks和files合并来更好的缓存
+	'dedupePluginCnf' : new webpack.optimize.DedupePlugin()
 }
