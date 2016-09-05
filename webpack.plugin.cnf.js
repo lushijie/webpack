@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-04 16:12:00
+* @Last Modified time: 2016-09-05 21:11:26
 */
 
 var webpack = require('webpack');
@@ -25,6 +25,11 @@ var CONST_INJECT = {
 }
 
 module.exports = {
+
+	//空plugin
+	'noopPlugincnf': function(){
+
+	},
 
 	//jquery(其他类库亦如此)引入全局的方案
 	//可以jquery变成全局变量，不用在自己文件require('jquery')了

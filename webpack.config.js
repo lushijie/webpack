@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-04 16:11:23
+* @Last Modified time: 2016-09-05 21:12:13
 */
 /**
  * webpack --display-error-details
@@ -24,7 +24,9 @@ var path = require('path');
 var Pcnf = require('./webpack.plugin.cnf.js');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-console.log('current ENV:',JSON.parse(process.env.NODE_ENV));
+var NODE_ENV = JSON.parse(process.env.NODE_ENV||'true');
+
+console.log('current ENV:', NODE_ENV);
 
 
 module.exports = {
@@ -115,7 +117,7 @@ module.exports = {
         Pcnf.transferWebpackPluginCnf,
         Pcnf.dedupePluginCnf,
         Pcnf.providePluginCnf,
-        //Pcnf.htmlWebPackPluginCnf
+        NODE_ENV ? Pcnf.htmlWebPackPluginCnf : Pcnf.noopPlugincnf
     ],
     resolve:{
         root: [
