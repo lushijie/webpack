@@ -2,21 +2,11 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-05 21:12:13
+* @Last Modified time: 2016-09-05 21:15:02
 */
 /**
  * webpack --display-error-details
- * webpack --progress --colors
  * webpack --progress --colors --watch
-
- * webpack 来执行一次开发的编译
- * webpack -p 来针对发布环境编译(压缩代码)
- * webpack --watch 来进行开发过程持续的增量编译(飞快地!)
- * webpack -d 来生成 SourceMaps
- *
- * webpack-dev-server --progress --colors
- * webpack-dev-server --inline -b 0.0.0.0
- * webpack-dev-server --iframe -b 0.0.0.0
  *
  */
 var webpack = require('webpack');
