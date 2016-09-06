@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-06 09:40:01
+* @Last Modified time: 2016-09-06 20:07:13
 */
 /**
  * webpack --display-error-details
@@ -89,7 +89,7 @@ module.exports = {
             },
             {
                 test: /\.js?$/,
-                loader: 'babel-loader',
+                loader: 'babel', // 'babel-loader' is also a legal name to reference
                 exclude: /node_modules/,
                 include: __dirname + '/public/resource/js',
                 query: {
@@ -133,7 +133,7 @@ module.exports = {
         contentBase: __dirname,//相当于整个devserver的跟目录，默认情况下等于__dirname
         hot: true,
         inline: true,
-        port: 8080,
+        port: 5050,
         host: '0.0.0.0',
         proxy: {
               "/proxy": {
