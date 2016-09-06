@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-05 21:15:02
+* @Last Modified time: 2016-09-06 09:35:46
 */
 /**
  * webpack --display-error-details
@@ -65,6 +65,10 @@ module.exports = {
         ],
         loaders: [
             {
+                test: require.resolve('./public/resource/js/page/home.js'),
+                loader: "imports?jqueryBak=jquery,testVar=>'sdfsfdsdf',config=>{size:50}"
+            },
+            {
                 test:/\.css$/,
                 //1.css文件外联方式实现
                 // loader: Pcnf.extractTextPluginCnf.extract(['css'])
@@ -107,7 +111,8 @@ module.exports = {
         Pcnf.transferWebpackPluginCnf,
         Pcnf.dedupePluginCnf,
         Pcnf.providePluginCnf,
-        NODE_ENV ? Pcnf.htmlWebPackPluginCnf : Pcnf.noopPlugincnf
+        Pcnf.htmlWebPackPluginCnf
+        //NODE_ENV ? Pcnf.htmlWebPackPluginCnf : Pcnf.noopPlugincnf
     ],
     resolve:{
         root: [
