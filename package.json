@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=true  webpack-dev-server --progress --profile",
-    "build": "NODE_ENV=true webpack",
+    "debug": "NODE_ENV=true webpack",
     "publish": "NODE_ENV=false webpack --progress --profile"
   },
   "author": "",
