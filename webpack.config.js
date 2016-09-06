@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-06 09:35:46
+* @Last Modified time: 2016-09-06 09:40:01
 */
 /**
  * webpack --display-error-details
@@ -11,7 +11,7 @@
  */
 var webpack = require('webpack');
 var path = require('path');
-var Pcnf = require('./webpack.plugin.cnf.js');
+var Pconf = require('./webpack.plugin.conf.js');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var NODE_ENV = JSON.parse(process.env.NODE_ENV||'true');
@@ -71,14 +71,14 @@ module.exports = {
             {
                 test:/\.css$/,
                 //1.css文件外联方式实现
-                // loader: Pcnf.extractTextPluginCnf.extract(['css'])
+                // loader: Pconf.extractTextPluginConf.extract(['css'])
                 //2.css文件内联方式实现
                 loader: "style!css"
             },
             {
                 test:/\.scss$/,
                 //1.scss 样式文件外联文件形式
-                // loader: Pcnf.extractTextPluginCnf.extract(['css','sass'])
+                // loader: Pconf.extractTextPluginConf.extract(['css','sass'])
                 //2.scss 样式文件内敛方式实现
                 loader: "style!css!sass"
             },
@@ -100,19 +100,19 @@ module.exports = {
         ]
     },
     plugins: [
-        Pcnf.definePluginCnf,
-        Pcnf.cleanPluginCnf,
-        Pcnf.bannerPluginCnf,
-        Pcnf.uglifyJsPluginCnf,
-        Pcnf.extractTextPluginCnf,
-        Pcnf.commonsChunkPluginCnf,
-        Pcnf.minChunkSizePluginCnf,
-        Pcnf.hotModuleReplacementPluginCnf,
-        Pcnf.transferWebpackPluginCnf,
-        Pcnf.dedupePluginCnf,
-        Pcnf.providePluginCnf,
-        Pcnf.htmlWebPackPluginCnf
-        //NODE_ENV ? Pcnf.htmlWebPackPluginCnf : Pcnf.noopPlugincnf
+        Pconf.definePluginConf,
+        Pconf.cleanPluginConf,
+        Pconf.bannerPluginConf,
+        Pconf.uglifyJsPluginConf,
+        Pconf.extractTextPluginConf,
+        Pconf.commonsChunkPluginConf,
+        Pconf.minChunkSizePluginConf,
+        Pconf.hotModuleReplacementPluginConf,
+        Pconf.transferWebpackPluginConf,
+        Pconf.dedupePluginConf,
+        Pconf.providePluginConf,
+        Pconf.htmlWebPackPluginConf
+        //NODE_ENV ? Pconf.htmlWebPackPluginConf : Pconf.noopPluginConf
     ],
     resolve:{
         root: [
