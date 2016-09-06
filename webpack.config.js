@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-06 22:11:03
+* @Last Modified time: 2016-09-06 22:25:30
 */
 /**
  * webpack --display-error-details
@@ -73,7 +73,10 @@ module.exports = {
                 //1.css文件外联方式实现
                 // loader: Pconf.extractTextPluginConf.extract(['css'])
                 //2.css文件内联方式实现
-                loader: "style!css"
+                //loader: "style-loader!css-loader!postcss-loader"同样ok
+                loader: "style!css!postcss"
+                //可以通过 postcss-js 插件处理写在 js 中的样式loader: "style-loader!css-loader!postcss-loader?parser=postcss-js"
+                //也可以通过 babel 结合 postcss-js 处理 es6 语法中的样式loader: "style-loader!css-loader!postcss-loader?parser=postcss-js!babel"
             },
             {
                 test:/\.scss$/,
@@ -153,5 +156,8 @@ module.exports = {
                 changeOrigin: true,
               }
         }
+    },
+    postcss: function () { // postcss 插件
+        return [precss, autoprefixer];
     }
 };
