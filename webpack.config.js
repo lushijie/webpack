@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-06 20:07:13
+* @Last Modified time: 2016-09-06 22:11:03
 */
 /**
  * webpack --display-error-details
@@ -89,12 +89,22 @@ module.exports = {
             },
             {
                 test: /\.js?$/,
-                loader: 'babel', // 'babel-loader' is also a legal name to reference
-                exclude: /node_modules/,
-                include: __dirname + '/public/resource/js',
+                loader: 'babel-loader', // 'babel' is also a legal name to reference
+                include: [
+                    path.resolve(__dirname, '/public/resource/js'),
+                ],
+                exclude: [
+                  path.resolve(__dirname, 'node_modules'),
+                ],
+                // Options to configure babel with
                 query: {
+                    //如果设置了这个参数，被转换的结果将会被缓存起来。当Webpack 再次编译时，将会首先尝试从缓存中读取转换结果
                     cacheDirectory: true,
-                    presets: ['es2015', 'stage-0']
+                    //与 babel-polyfill 一样，babel-runtime 的作用也是模拟 ES2015 环境。只不过，babel-polyfill 是针对全局环境的,babel-runtime 更像是分散的 polyfill 模块，我们可以在自己的模块里单独引入
+                    //通过babel-plugin-transform-runtime插件可以禁用babel向每个文件注入helper
+                    plugins: ['transform-runtime'],
+                    //其中 babel-preset-es2015 处理 ES6，babel-preset-react 处理 JSX
+                    presets: ['es2015', 'stage-0', 'react']
                 }
             }
         ]
