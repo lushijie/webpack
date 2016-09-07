@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-07 22:28:52
+* @Last Modified time: 2016-09-07 22:41:31
 */
 /**
  * webpack --display-error-details
@@ -33,7 +33,7 @@ module.exports = {
 
     //entry 情况2
     //entry 如果为一个数组，数组中的文件会打包在一起融合到main.bundle.js进入boot，生成common.bundle.js与main.bundle.js
-    entry: ['./public/resource/js/page/home.js','./public/resource/js/page/admin.js'],
+    //entry: ['./public/resource/js/page/home.js','./public/resource/js/page/admin.js'],
 
     //entry 情况3
     //entry为对象,生成common.bundle.js 与 home.bundle.js 与 admin.bundle.js(home,admin为对象的key)
@@ -57,7 +57,7 @@ module.exports = {
         preLoaders: [
             {
               //babel eslint 校验
-              test: /\.(js|jsx)$/,
+              test: /\.jsx?$/,
               exclude: /node_modules/,
               include: [path.resolve(__dirname, "public/resource/js/page"),path.resolve(__dirname, "public/resource/js/common"),],
               loader: 'eslint-loader'
@@ -92,7 +92,7 @@ module.exports = {
                 loader: 'url-loader?limit=8192&name=./img/[name].[ext]'
             },
             {
-                test: /\.js?$/,
+                test: /\.jsx?$/,
                 loader: 'babel-loader', // 'babel' is also a legal name to reference
                 include: [
                     path.resolve(__dirname, '/public/resource/js'),
