@@ -5,9 +5,9 @@ module.exports = {
       "mocha": true,
       "browser": true
     },
-    // "plugins": [
-    //   "react"
-    // ],
+    "plugins": [
+      "react"
+    ],
     "ecmaFeatures": {
       "jsx": true
     },
