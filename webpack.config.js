@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-07 22:58:09
+* @Last Modified time: 2016-09-07 23:01:51
 */
 /**
  * webpack --display-error-details
@@ -12,12 +12,9 @@
 var webpack = require('webpack');
 var path = require('path');
 var Pconf = require('./webpack.plugin.conf.js');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var NODE_ENV = JSON.parse(process.env.NODE_ENV||'true');
-
-console.log('current ENV:', NODE_ENV);
-
+//console.log('current ENV:', NODE_ENV);
 
 module.exports = {
     //调试环境：使用 eval 方式可大幅提高持续构建效率
