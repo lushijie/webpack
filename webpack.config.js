@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-07 22:41:31
+* @Last Modified time: 2016-09-07 22:58:09
 */
 /**
  * webpack --display-error-details
@@ -32,8 +32,8 @@ module.exports = {
     //entry: './public/resource/js/page/home.js',
 
     //entry 情况2
-    //entry 如果为一个数组，数组中的文件会打包在一起融合到main.bundle.js进入boot，生成common.bundle.js与main.bundle.js
-    //entry: ['./public/resource/js/page/home.js','./public/resource/js/page/admin.js'],
+    //entry 如果为一个数组，数组中的文件会打包在一起融合到main.bundle.js进入boot，生成common.bundle.js与main.bundle.js,如果没有开启commonsChunkPlugin只会生成一个main.bundle.js
+    // entry: ['./public/resource/js/page/home.js','./public/resource/js/page/admin.js'],
 
     //entry 情况3
     //entry为对象,生成common.bundle.js 与 home.bundle.js 与 admin.bundle.js(home,admin为对象的key)
@@ -56,11 +56,14 @@ module.exports = {
     module: {
         preLoaders: [
             {
-              //babel eslint 校验
-              test: /\.jsx?$/,
-              exclude: /node_modules/,
-              include: [path.resolve(__dirname, "public/resource/js/page"),path.resolve(__dirname, "public/resource/js/common"),],
-              loader: 'eslint-loader'
+                //babel eslint 校验
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                include: [
+                    path.resolve(__dirname, "public/resource/js/page"),
+                    path.resolve(__dirname, "public/resource/js/common")
+                ],
+                loader: 'eslint-loader'
             }
         ],
         loaders: [
