@@ -1,4 +1,4 @@
-module.exports = {
+{
     "parser": "babel-eslint",
     "env": {
       "node": true,
@@ -41,4 +41,4 @@ module.exports = {
         // "no-with": 2,//禁用with
         // "comma-dangle": [2, "never"],//对象字面量项尾不能有逗号
     }
-};
+}
