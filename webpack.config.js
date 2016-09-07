@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-06 22:25:30
+* @Last Modified time: 2016-09-07 22:28:52
 */
 /**
  * webpack --display-error-details
@@ -65,6 +65,7 @@ module.exports = {
         ],
         loaders: [
             {
+                //通过imports-loader向特定模块注入变量，注入模块
                 test: require.resolve('./public/resource/js/page/home.js'),
                 loader: "imports?jqueryBak=jquery,testVar=>'sdfsfdsdf',config=>{size:50}"
             },
