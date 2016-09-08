@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-08 09:17:10
+* @Last Modified time: 2016-09-08 09:31:30
 */
 /**
  * webpack --display-error-details
@@ -48,7 +48,7 @@ module.exports = {
         path: 'dist',// 正式部署时打包进入的文件夹名称
         filename: '[name].bundle.js',//控制的是除common.bundle.js（改文件名就是如此）之外的其他模块的文件名,
         //当时entry使用对象形式时，[hash]不可以使用，[id]、[chunkhash]与[name]可以使用
-        chunkFilename: '[name].chunk.js'
+        chunkFilename: '[name].[chunkhash:8].chunk.js'
     },
     module: {
         preLoaders: [
@@ -90,6 +90,8 @@ module.exports = {
                 test: /\.(png|jpg|gif)$/,
                 //图片如果小于8192kb将会以base64形式存在，否则产生图片文件
                 loader: 'url-loader?limit=8192&name=./img/[name].[ext]'
+                //test: /\.(png|jpg|gif|ttf|eot|svg|woff|woff2)$/,
+                //loader: 'url-loader?name=[path][name].[ext]&limit=9182'
             },
             {
                 test: /\.jsx?$/,
@@ -136,7 +138,7 @@ module.exports = {
         alias:{
              'Rjs': 'public/resource/js',//别名，可在引用的时候使用缩写
              'Rcss': 'public/resource/css',
-             'Rimg': 'public/resource/img',
+             'Rimg': 'public/resource/img'
         }
     },
     devServer: {
