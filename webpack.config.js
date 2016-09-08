@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-07 23:01:51
+* @Last Modified time: 2016-09-08 09:17:10
 */
 /**
  * webpack --display-error-details
@@ -67,7 +67,7 @@ module.exports = {
             {
                 //通过imports-loader向特定模块注入变量，注入模块
                 test: require.resolve('./public/resource/js/page/home.js'),
-                loader: "imports?jqueryBak=jquery,testVar=>'sdfsfdsdf',config=>{size:50}"
+                loader: "imports-loader?jqueryBak=jquery,testVar=>'sdfsfdsdf',config=>{size:50}"
             },
             {
                 test:/\.css$/,
@@ -145,7 +145,7 @@ module.exports = {
             colors: true
         },
         contentBase: __dirname,//相当于整个devserver的跟目录，默认情况下等于__dirname
-        hot: true,
+        hot: true,//配合hotModuleReplacementPlugin使用
         inline: true,
         port: 5050,
         host: '0.0.0.0',
