@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=true  webpack-dev-server --progress --profile",
-    "debug": "NODE_ENV=true webpack",
-    "publish": "NODE_ENV=false webpack --progress --profile"
+    "start": "npm run dev",
+    "dev": "export NODE_ENV=development && webpack-dev-server --progress --profile ",
+    "debug": "export NODE_ENV=development && webpack",
+    "publish": "NODE_ENV=production webpack --progress --profile"
   },
   "author": "",
   "license": "ISC",

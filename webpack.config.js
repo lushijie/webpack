@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-08 09:31:30
+* @Last Modified time: 2016-09-08 10:19:59
 */
 /**
  * webpack --display-error-details
@@ -13,7 +13,7 @@ var webpack = require('webpack');
 var path = require('path');
 var Pconf = require('./webpack.plugin.conf.js');
 
-var NODE_ENV = JSON.parse(process.env.NODE_ENV||'true');
+var NODE_ENV = JSON.parse(JSON.stringify(process.env.NODE_ENV || 'development'));
 //console.log('current ENV:', NODE_ENV);
 
 module.exports = {
@@ -128,7 +128,7 @@ module.exports = {
         Pconf.dedupePluginConf,
         Pconf.providePluginConf,
         Pconf.htmlWebPackPluginConf
-        //NODE_ENV ? Pconf.htmlWebPackPluginConf : Pconf.noopPluginConf
+        //NODE_ENV == 'development' ? Pconf.htmlWebPackPluginConf : Pconf.noopPluginConf
     ],
     resolve:{
         root: [

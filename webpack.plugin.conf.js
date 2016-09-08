@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-06 09:40:13
+* @Last Modified time: 2016-09-08 10:17:54
 */
 
 var webpack = require('webpack');
@@ -39,7 +39,9 @@ module.exports = {
 
 	// definePlugin 会把定义的string 变量插入到Js代码中
 	'definePluginConf': new webpack.DefinePlugin({
-	  VAR_INJECT: CONST_INJECT[JSON.parse(process.env.NODE_ENV|| 'true') ? 'ENV':'PUB']
+	  VAR_INJECT: CONST_INJECT[
+	  	JSON.parse(JSON.stringify(process.env.NODE_ENV|| 'development')) == 'development' ? 'ENV':'PUB'
+	  ]
 	}),
 
 	//文件拷贝插件
