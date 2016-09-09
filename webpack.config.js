@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-09 09:52:28
+* @Last Modified time: 2016-09-09 11:43:58
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -12,13 +12,16 @@ var NODE_ENV = JSON.parse(JSON.stringify(process.env.NODE_ENV || 'development'))
 //console.log('current ENV:', NODE_ENV);
 
 module.exports = {
-    //调试环境：使用 eval 方式可大幅提高持续构建效率
+    //建议：
+    //测试环境=cheap-module-eval-source-map
+    //线上环境=cheap-module-source-map
+    //线上环境：sourcemap 没有列信息，使用 cheap 模式可以大幅提高 souremap 生成的效率
+    //外联.map时，.map文件只会在F12开启时进行下载
     devtool: 'cheap-module-eval-source-map',
 
-    //线上环境：sourcemap 没有列信息，使用 cheap 模式可以大幅提高 souremap 生成的效率
-    //外联.map时，.map文件只会在F12开启时进行下载（sourceMap主要服务于调试），故推荐使用外联.map的形式。
-    //devtool: 'cheap-module-source-map',
-    context: __dirname,//基础目录（绝对路径），entry根据此路径进行解析
+    //基础目录（绝对路径），entry根据此路径进行解析
+    context: __dirname,
+
     //entry 情况1,
     //entry 为字符串，生成 common.bundle.js 与 main.bundle.js（启用commonchunk的情况下）
     //entry: './public/resource/js/page/home.js',
@@ -31,7 +34,7 @@ module.exports = {
     //entry为对象,生成common.bundle.js 与 home.bundle.js 与 admin.bundle.js(home,admin为对象的key)（启用commonchunk的情况下）
     entry: {
         home: './public/resource/js/page/home.js',
-        admin: './public/resource/js/page/admin.js',
+        admin: './public/resource/js/page/admin.js'
         //ventor has problem why?
         // ventor: [
         //     // 引入jQuery
@@ -42,8 +45,7 @@ module.exports = {
         publicPath: '/dist/',//webpack-dev-server会使用改路径寻找output 文件
         path: 'dist',// 正式部署时打包进入的文件夹名称
         filename: '[name].bundle.js',//控制的是除common.bundle.js（改文件名就是如此）之外的其他模块的文件名,
-        //当时entry使用对象形式时，[hash]不可以使用，[id]、[chunkhash]与[name]可以使用
-        chunkFilename: '[name].[chunkhash:8].chunk.js'
+        chunkFilename: '[name].[chunkhash:8].chunk.js'//当时entry使用对象形式时，[hash]不可以使用，[id]、[chunkhash]与[name]可以使用
     },
     module: {
         preLoaders: [
@@ -68,6 +70,7 @@ module.exports = {
                 test:/\.css$/,
                 //1.css文件外联方式实现
                 // loader: Pconf.extractTextPluginConf.extract(['css'])
+
                 //2.css文件内联方式实现
                 //loader: "style-loader!css-loader!postcss-loader"同样ok
                 loader: "style!css!postcss"
@@ -78,6 +81,7 @@ module.exports = {
                 test:/\.scss$/,
                 //1.scss 样式文件外联文件形式
                 // loader: Pconf.extractTextPluginConf.extract(['css','sass'])
+
                 //2.scss 样式文件内敛方式实现
                 loader: "style!css!sass"
             },

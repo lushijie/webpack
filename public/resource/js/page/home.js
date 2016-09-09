@@ -2,13 +2,13 @@
 * @Author: lushijie
 * @Date:   2016-03-03 14:30:52
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-06 09:36:44
+* @Last Modified time: 2016-09-09 11:44:29
 */
-import 'Rjs/common/base.js';
-import 'Rcss/page/home.scss';
+// import * from 'Rjs/common/base.js';
+// import * from 'Rcss/page/home.scss';
 // 方法1：引入 node_module中的类库,可以使用providePlugin引入
 // 方法2：
-//import $ from 'jquery';
+// import $ from 'jquery';
 
 //1.import
 //2.providePluginCnf

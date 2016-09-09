@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-08 10:17:54
+* @Last Modified time: 2016-09-09 11:45:11
 */
 
 var webpack = require('webpack');
@@ -52,8 +52,8 @@ module.exports = {
 
 	//css 以文件类型引入插件
 	'extractTextPluginConf': new ExtractTextPlugin("[name].bundle.css",{
-	        //allChunks: false,
-	        //disable: false
+	    //allChunks: false,
+	    //disable: false
 	}),
 
 	 //js压缩组件
@@ -102,8 +102,8 @@ module.exports = {
 	//如果有多个页面需要写多个htmlWebPackPluginConf
 	'htmlWebPackPluginConf': new HtmlWebpackPlugin({
         // 访问地址 http://127.0.0.1:8080/dist/views/home.html
-        filename: 'views/home.html',
-        title: 'halo',
+        filename: 'views/home/index.html',
+        title: 'This is Home',
         hash: true,
         //此时不注入相关的js,否则如果之前手动引入了js，可能导致重复引入
         inject: false,
