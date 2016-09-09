@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-09 11:45:11
+* @Last Modified time: 2016-09-09 17:06:06
 */
 
 var webpack = require('webpack');
@@ -20,7 +20,7 @@ var CONST_INJECT = {
 	},
 	PUB:{
 		"API_URL": JSON.stringify('http://online:8080/bands'),
-		d: 900
+		b: 456
 	}
 }
 
@@ -103,10 +103,9 @@ module.exports = {
 	'htmlWebPackPluginConf': new HtmlWebpackPlugin({
         // 访问地址 http://127.0.0.1:8080/dist/views/home.html
         filename: 'views/home/index.html',
-        title: 'This is Home',
+        title: 'Webpack-Seed',
         hash: true,
-        //此时不注入相关的js,否则如果之前手动引入了js，可能导致重复引入
-        inject: false,
+        inject: false,//此时不注入相关的js,否则如果之前手动引入了js，可能导致重复引入
         template: path.resolve(__dirname,'app/views/home/index.html'),
         favicon:path.resolve(__dirname,'public/favicon.ico'),
         minify:{
@@ -115,7 +114,7 @@ module.exports = {
             minifyCSS: false
         },
         //Allows you to add only some chunks (e.g. only the unit-test chunk)
-        chunks: ['common','home'],
+        //chunks: ['common','home'],
         //excludeChunks: ['','']
     }),
 }

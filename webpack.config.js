@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-09 16:51:59
+* @Last Modified time: 2016-09-09 17:03:44
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -74,7 +74,7 @@ module.exports = {
 
                 //2.css文件内联方式实现
                 //loader: "style-loader!css-loader!postcss-loader"同样ok
-                loader: "style!css!postcss-loader"
+                loader: "style!css!postcss"
                 //可以通过 postcss-js 插件处理写在 js 中的样式loader: "style-loader!css-loader!postcss-loader?parser=postcss-js"
                 //也可以通过 babel 结合 postcss-js 处理 es6 语法中的样式loader: "style-loader!css-loader!postcss-loader?parser=postcss-js!babel"
             },
@@ -84,10 +84,10 @@ module.exports = {
                 // loader: Pconf.extractTextPluginConf.extract(['css','sass'])
 
                 //2.scss 样式文件内敛方式实现
-                loader: "style!css!sass"
+                loader: "style!css!postcss!sass"
             },
             {
-                test: /\.(png|jpg|gif)$/,
+                test: /\.(png|jpg|gif|ttf|eot|svg|woff|woff2)$/,
                 //图片如果小于8192kb将会以base64形式存在，否则产生图片文件
                 loader: 'url-loader?limit=8192&name=./img/[name].[ext]'
                 //test: /\.(png|jpg|gif|ttf|eot|svg|woff|woff2)$/,
@@ -97,7 +97,7 @@ module.exports = {
                 test: /\.jsx?$/,
                 loader: 'babel-loader', // 'babel' is also a legal name to reference
                 include: [
-                    //warning 路径错误写成/public/resource/js，导致了Uncaught SyntaxError: Unexpected token import。
+                    //warning 路径错误写成/public/resource/js，导致了es6语法Uncaught SyntaxError
                     path.resolve(__dirname, 'public/resource/js'),
                 ],
                 exclude: [
