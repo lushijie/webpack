@@ -36,9 +36,9 @@ module.exports = {
         home: './public/resource/js/page/home.js',
         admin: './public/resource/js/page/admin.js',
         vendor: [
-            //ventor 引入主要是为了提取各个模块的common部分，此处（home,admin,jQuery 会提取common,生成common.js）,
-            //如果不用ventor,jquery会被单独打入home.js不利于缓存
-            //在index.html引入了ventor.bundle.js不意味着将jQuery主动注入了各个模块，所以依然需要providePlugin支持或者在各个模块手动import方式引入
+            //vendor 引入主要是为了提取各个模块的common部分，此处（home,admin,jQuery 会提取common,生成common.js）,
+            //如果不用vendor,jquery会被单独打入home.js不利于缓存
+            //在index.html引入了vendor.bundle.js不意味着将jQuery主动注入了各个模块，所以依然需要providePlugin支持或者在各个模块手动import方式引入
             'jquery'
         ]
     },
