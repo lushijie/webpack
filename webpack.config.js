@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-09 16:45:32
+* @Last Modified time: 2016-09-09 16:51:59
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -38,6 +38,7 @@ module.exports = {
         ventor: [
             //ventor 引入主要是为了提取各个模块的common部分，此处（home,admin,jQuery 会提取common,生成common.js）,
             //如果不用ventor,jquery会被单独打入home.js不利于缓存
+            //在index.html引入了ventor.bundle.js不意味着将jQuery主动注入了各个模块，所以依然需要providePlugin支持或者在各个模块手动import方式引入
             'jquery'
         ]
     },
@@ -128,6 +129,7 @@ module.exports = {
         Pconf.dedupePluginConf,
         Pconf.providePluginConf,
         Pconf.htmlWebPackPluginConf
+        //Pconf.noopPluginConf是一个空操作
         //NODE_ENV == 'development' ? Pconf.htmlWebPackPluginConf : Pconf.noopPluginConf
     ],
     resolve:{
