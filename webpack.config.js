@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-09 11:43:58
+* @Last Modified time: 2016-09-09 12:36:09
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -53,10 +53,10 @@ module.exports = {
                 //babel eslint 校验
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                include: [
-                    path.resolve(__dirname, "public/resource/js/page"),
-                    path.resolve(__dirname, "public/resource/js/common")
-                ],
+                // include: [
+                //     path.resolve(__dirname, "public/resource/js/page"),
+                //     path.resolve(__dirname, "public/resource/js/common")
+                // ],
                 loader: 'eslint-loader'
             }
         ],
@@ -73,7 +73,7 @@ module.exports = {
 
                 //2.css文件内联方式实现
                 //loader: "style-loader!css-loader!postcss-loader"同样ok
-                loader: "style!css!postcss"
+                loader: "style!css!postcss-loader"
                 //可以通过 postcss-js 插件处理写在 js 中的样式loader: "style-loader!css-loader!postcss-loader?parser=postcss-js"
                 //也可以通过 babel 结合 postcss-js 处理 es6 语法中的样式loader: "style-loader!css-loader!postcss-loader?parser=postcss-js!babel"
             },
@@ -96,7 +96,8 @@ module.exports = {
                 test: /\.jsx?$/,
                 loader: 'babel-loader', // 'babel' is also a legal name to reference
                 include: [
-                    path.resolve(__dirname, '/public/resource/js'),
+                    //warning 路径错误写成/public/resource/js，导致了Uncaught SyntaxError: Unexpected token import。
+                    path.resolve(__dirname, 'public/resource/js'),
                 ],
                 exclude: [
                   path.resolve(__dirname, 'node_modules'),
@@ -135,9 +136,9 @@ module.exports = {
         ],
         extensions: ['', '.js', '.jsx'],//引用时遇到这些后缀结束的文件可以不加后缀名
         alias:{
-             'Rjs': 'public/resource/js',//别名，可在引用的时候使用缩写
-             'Rcss': 'public/resource/css',
-             'Rimg': 'public/resource/img'
+             'rjs': 'public/resource/js',//别名，可在引用的时候使用缩写
+             'rcss': 'public/resource/css',
+             'rimg': 'public/resource/img'
         }
     },
     devServer: {
@@ -160,6 +161,8 @@ module.exports = {
         }
     },
     postcss: function () { // postcss 插件
-        return [precss, autoprefixer];
+        return {
+            plugins: [require('precss'), require('autoprefixer')]
+        }
     }
 };

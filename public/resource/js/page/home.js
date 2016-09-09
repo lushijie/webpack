@@ -2,10 +2,10 @@
 * @Author: lushijie
 * @Date:   2016-03-03 14:30:52
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-09 11:44:29
+* @Last Modified time: 2016-09-09 12:37:02
 */
-// import * from 'Rjs/common/base.js';
-// import * from 'Rcss/page/home.scss';
+import 'rjs/common/base.js';
+import 'rcss/page/home.scss';
 // 方法1：引入 node_module中的类库,可以使用providePlugin引入
 // 方法2：
 // import $ from 'jquery';
@@ -15,7 +15,7 @@
 console.log('jquery引入测试',$(window).width());
 
 var img = document.createElement('img');
-img.src = require('Rimg/common/catxiu.png');
+img.src = require('rimg/common/catxiu.png');
 $('body').append(img);
 console.log('This is home.js');
 
