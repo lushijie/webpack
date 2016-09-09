@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-09 12:36:09
+* @Last Modified time: 2016-09-09 12:42:41
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -151,14 +151,21 @@ module.exports = {
         inline: true,
         port: 5050,
         host: '0.0.0.0',
-        proxy: {
-              "/proxy": {
-                ignorePath: true,
-                target: "http://wan.sogou.com",
-                secure: false,//optional for https
-                changeOrigin: true,
-              }
-        }
+        // proxy: {
+        //       "/proxy": {
+        //         ignorePath: true,
+        //         target: "http://wan.sogou.com",
+        //         secure: false,//optional for https
+        //         changeOrigin: true,
+        //       }
+        // },
+        // historyAPI支持
+        // historyApiFallback: {
+        //     index: '/dist/views/home/index.html' //tips 这里不要使用__dirname!,因为devserver生成的是虚拟目录
+        //     rewrites: [
+        //         { from: /\//, to: '/dist/views/home/index.html'}
+        //     ]
+        // }
     },
     postcss: function () { // postcss 插件
         return {
