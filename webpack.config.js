@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-09 12:42:41
+* @Last Modified time: 2016-09-09 16:45:32
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -34,12 +34,12 @@ module.exports = {
     //entry为对象,生成common.bundle.js 与 home.bundle.js 与 admin.bundle.js(home,admin为对象的key)（启用commonchunk的情况下）
     entry: {
         home: './public/resource/js/page/home.js',
-        admin: './public/resource/js/page/admin.js'
-        //ventor has problem why?
-        // ventor: [
-        //     // 引入jQuery
-        //     'jquery'
-        // ]
+        admin: './public/resource/js/page/admin.js',
+        ventor: [
+            //ventor 引入主要是为了提取各个模块的common部分，此处（home,admin,jQuery 会提取common,生成common.js）,
+            //如果不用ventor,jquery会被单独打入home.js不利于缓存
+            'jquery'
+        ]
     },
     output: {
         publicPath: '/dist/',//webpack-dev-server会使用改路径寻找output 文件
