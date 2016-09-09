@@ -2,13 +2,8 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-08 10:19:59
+* @Last Modified time: 2016-09-09 09:52:28
 */
-/**
- * webpack --display-error-details
- * webpack --progress --colors --watch
- *
- */
 var webpack = require('webpack');
 var path = require('path');
 var Pconf = require('./webpack.plugin.conf.js');
@@ -25,15 +20,15 @@ module.exports = {
     //devtool: 'cheap-module-source-map',
     context: __dirname,//基础目录（绝对路径），entry根据此路径进行解析
     //entry 情况1,
-    //entry 为字符串，生成 common.bundle.js 与 main.bundle.js
+    //entry 为字符串，生成 common.bundle.js 与 main.bundle.js（启用commonchunk的情况下）
     //entry: './public/resource/js/page/home.js',
 
     //entry 情况2
-    //entry 如果为一个数组，数组中的文件会打包在一起融合到main.bundle.js进入boot，生成common.bundle.js与main.bundle.js,如果没有开启commonsChunkPlugin只会生成一个main.bundle.js
+    //entry 如果为一个数组，数组中的文件会打包在一起融合到main.bundle.js进入boot，生成common.bundle.js与main.bundle.js（启用commonchunk的情况下）,如果没有开启commonsChunkPlugin只会生成一个main.bundle.js
     // entry: ['./public/resource/js/page/home.js','./public/resource/js/page/admin.js'],
 
     //entry 情况3
-    //entry为对象,生成common.bundle.js 与 home.bundle.js 与 admin.bundle.js(home,admin为对象的key)
+    //entry为对象,生成common.bundle.js 与 home.bundle.js 与 admin.bundle.js(home,admin为对象的key)（启用commonchunk的情况下）
     entry: {
         home: './public/resource/js/page/home.js',
         admin: './public/resource/js/page/admin.js',
