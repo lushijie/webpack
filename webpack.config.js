@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-09 17:03:44
+* @Last Modified time: 2016-09-22 09:36:39
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -107,8 +107,7 @@ module.exports = {
                 query: {
                     //如果设置了这个参数，被转换的结果将会被缓存起来。当Webpack 再次编译时，将会首先尝试从缓存中读取转换结果
                     cacheDirectory: true,
-                    //与 babel-polyfill 一样，babel-runtime 的作用也是模拟 ES2015 环境。只不过，babel-polyfill 是针对全局环境的,babel-runtime 更像是分散的 polyfill 模块，我们可以在自己的模块里单独引入
-                    //通过babel-plugin-transform-runtime插件可以禁用babel向每个文件注入helper
+                    //transform-runtime 默认会导入 babel-polyfill，可配置
                     plugins: ['transform-runtime'],
                     //其中 babel-preset-es2015 处理 ES6，babel-preset-react 处理 JSX
                     presets: ['es2015', 'stage-0', 'react']
