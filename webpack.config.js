@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-22 09:36:39
+* @Last Modified time: 2016-09-23 18:03:17
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -12,9 +12,8 @@ var NODE_ENV = JSON.parse(JSON.stringify(process.env.NODE_ENV || 'development'))
 //console.log('current ENV:', NODE_ENV);
 
 module.exports = {
-    //建议：
-    //测试环境=cheap-module-eval-source-map
-    //线上环境=cheap-module-source-map
+    //dev=cheap-module-eval-source-map
+    //online=cheap-module-source-map
     //线上环境：sourcemap 没有列信息，使用 cheap 模式可以大幅提高 souremap 生成的效率
     //外联.map时，.map文件只会在F12开启时进行下载
     devtool: 'cheap-module-eval-source-map',
@@ -55,8 +54,8 @@ module.exports = {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
                 // include: [
-                //     path.resolve(__dirname, "public/resource/js/page"),
-                //     path.resolve(__dirname, "public/resource/js/common")
+                //     path.join(__dirname, "public/resource/js/page"),
+                //     path.join(__dirname, "public/resource/js/common")
                 // ],
                 loader: 'eslint-loader'
             }
@@ -64,7 +63,7 @@ module.exports = {
         loaders: [
             {
                 //通过imports-loader向特定模块注入变量，注入模块
-                test: require.resolve('./public/resource/js/page/home.js'),
+                test: path.join(__dirname, 'public/resource/js/page/home.js'),
                 loader: "imports-loader?jqueryBak=jquery,testVar=>'sdfsfdsdf',config=>{size:50}"
             },
             {
@@ -97,11 +96,10 @@ module.exports = {
                 test: /\.jsx?$/,
                 loader: 'babel-loader', // 'babel' is also a legal name to reference
                 include: [
-                    //warning 路径错误写成/public/resource/js，导致了es6语法Uncaught SyntaxError
-                    path.resolve(__dirname, 'public/resource/js'),
+                    path.join(__dirname, 'public/resource/js'),
                 ],
                 exclude: [
-                  path.resolve(__dirname, 'node_modules'),
+                  path.join(__dirname, 'node_modules'),
                 ],
                 // Options to configure babel with
                 query: {
@@ -116,8 +114,8 @@ module.exports = {
         ]
     },
     plugins: [
-        Pconf.definePluginConf,
         Pconf.cleanPluginConf,
+        Pconf.definePluginConf,
         Pconf.bannerPluginConf,
         Pconf.uglifyJsPluginConf,
         Pconf.extractTextPluginConf,
@@ -133,7 +131,7 @@ module.exports = {
     ],
     resolve:{
         root: [
-            path.resolve(__dirname)
+            __dirname
         ],
         extensions: ['', '.js', '.jsx'],//引用时遇到这些后缀结束的文件可以不加后缀名
         alias:{

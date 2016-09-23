@@ -2,11 +2,12 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-09 17:06:06
+* @Last Modified time: 2016-09-23 18:10:49
 */
 
 var webpack = require('webpack');
 var path = require('path');
+var moment = require('moment');
 var CleanPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -66,7 +67,7 @@ module.exports = {
 	}),
 
 	//为打包之后的各个文件添加文件说明头部
-	'bannerPluginConf': new webpack.BannerPlugin('This file is created by lushijie'),
+	'bannerPluginConf': new webpack.BannerPlugin('This file is created or modified by lushijie at ' + moment().format('YYYY-MM-DD h:mm:ss')),
 
 	//下次打包清除上一次打包文件
 	'cleanPluginConf': new CleanPlugin(['dist'], {
