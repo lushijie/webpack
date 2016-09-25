@@ -50,6 +50,10 @@
   },
   "globals": {
     "React": true,
-    "$": true
+    "$": true,
+    "VAR_INJECT": true,
+    "importObj": true,
+    "importVar": true,
+    "importLib": true
   }
 }
