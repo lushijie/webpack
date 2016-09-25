@@ -2,13 +2,14 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-25 13:26:37
+* @Last Modified time: 2016-09-25 13:32:27
 */
 var webpack = require('webpack');
 var path = require('path');
 var moment = require('moment');
 var Pconf = require('./webpack.plugin.conf.js');
 
+var NODE_ENV = JSON.parse(JSON.stringify(process.env.NODE_ENV || 'development'));
 var CONST_INJECT = {
     ENV:{
         a: 123,
@@ -19,8 +20,10 @@ var CONST_INJECT = {
         "API_URL": JSON.stringify('http://online:8080/bands'),
         b: 456
     }
-}
-var NODE_ENV = JSON.parse(JSON.stringify(process.env.NODE_ENV || 'development'));
+};
+var VAR_INJECT = {
+    VAR_INJECT: CONST_INJECT[NODE_ENV == 'development' ? 'ENV':'PUB']
+};
 var bannerText = 'This file is created or modified by lushijie at ' + moment().format('YYYY-MM-DD h:mm:ss');
 
 module.exports = {
@@ -128,12 +131,7 @@ module.exports = {
     plugins: [
         Pconf.cleanPluginConf(['dist']),
         Pconf.bannerPluginConf(bannerText),
-        Pconf.definePluginConf({
-            VAR_INJECT: CONST_INJECT[
-                JSON.parse(JSON.stringify(process.env.NODE_ENV|| 'development')) == 'development' ?
-                'ENV':'PUB'
-            ]
-        }),
+        Pconf.definePluginConf(VAR_INJECT),
         Pconf.uglifyJsPluginConf(),
         Pconf.extractTextPluginConf(),
         Pconf.commonsChunkPluginConf(),
