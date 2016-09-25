@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-25 13:28:50
+* @Last Modified time: 2016-09-25 13:35:57
 */
 
 var webpack = require('webpack');
@@ -138,21 +138,10 @@ module.exports = {
 
 	//simplifies creation of HTML files to serve your webpack bundles
 	//如果有多个页面需要写多个htmlWebPackPluginConf
-	'htmlWebPackPluginConf': new HtmlWebpackPlugin({
-        // 访问地址 http://127.0.0.1:8080/dist/views/home.html
-        filename: 'views/home/index.html',
-        title: 'Webpack-Seed',
-        hash: true,
-        inject: false,//此时不注入相关的js,否则如果之前手动引入了js，可能导致重复引入
-        template: path.resolve(__dirname,'app/views/home/index.html'),
-        favicon:path.resolve(__dirname,'public/favicon.ico'),
-        minify:{
-            removeComments: false,
-            collapseWhitespace: false,
-            minifyCSS: false
-        },
-        //Allows you to add only some chunks (e.g. only the unit-test chunk)
-        //chunks: ['common','home'],
-        //excludeChunks: ['','']
-    }),
+	'htmlWebPackPluginConf': function(options) {
+        options = objectAssign({}, options);
+        return (
+            new HtmlWebpackPlugin(options)
+        )
+    },
 }

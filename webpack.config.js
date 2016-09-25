@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-25 13:32:27
+* @Last Modified time: 2016-09-25 13:36:29
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -25,6 +25,23 @@ var VAR_INJECT = {
     VAR_INJECT: CONST_INJECT[NODE_ENV == 'development' ? 'ENV':'PUB']
 };
 var bannerText = 'This file is created or modified by lushijie at ' + moment().format('YYYY-MM-DD h:mm:ss');
+var htmlPluginOptions = {
+        // 访问地址 http://127.0.0.1:8080/dist/views/home.html
+        filename: 'views/home/index.html',
+        title: 'Webpack-Seed',
+        hash: true,
+        inject: false,//此时不注入相关的js,否则如果之前手动引入了js，可能导致重复引入
+        template: path.resolve(__dirname,'app/views/home/index.html'),
+        favicon:path.resolve(__dirname,'public/favicon.ico'),
+        minify:{
+            removeComments: false,
+            collapseWhitespace: false,
+            minifyCSS: false
+        },
+        //Allows you to add only some chunks (e.g. only the unit-test chunk)
+        //chunks: ['common','home'],
+        //excludeChunks: ['','']
+};
 
 module.exports = {
     //dev=cheap-module-eval-source-map
@@ -104,8 +121,6 @@ module.exports = {
                 test: /\.(png|jpg|gif|ttf|eot|svg|woff|woff2)$/,
                 //图片如果小于8192kb将会以base64形式存在，否则产生图片文件
                 loader: 'url-loader?limit=8192&name=./img/[name].[ext]'
-                //test: /\.(png|jpg|gif|ttf|eot|svg|woff|woff2)$/,
-                //loader: 'url-loader?name=[path][name].[ext]&limit=9182'
             },
             {
                 test: /\.jsx?$/,
@@ -116,7 +131,6 @@ module.exports = {
                 exclude: [
                   path.join(__dirname, 'node_modules'),
                 ],
-                // Options to configure babel with
                 query: {
                     //如果设置了这个参数，被转换的结果将会被缓存起来。当Webpack 再次编译时，将会首先尝试从缓存中读取转换结果
                     cacheDirectory: true,
@@ -142,9 +156,9 @@ module.exports = {
         Pconf.providePluginConf({
             $: 'jquery'
         }),
-        Pconf.htmlWebPackPluginConf
+        Pconf.htmlWebPackPluginConf(htmlPluginOptions)
         //Pconf.noopPluginConf()是一个空操作
-        //NODE_ENV == 'development' ? Pconf.htmlWebPackPluginConf : Pconf.noopPluginConf()
+        //NODE_ENV == 'development' ? Pconf.uglifyJsPluginConf() : Pconf.noopPluginConf()
     ],
     resolve:{
         root: [
