@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-25 13:04:55
+* @Last Modified time: 2016-09-25 13:13:12
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -116,10 +116,10 @@ module.exports = {
     },
     plugins: [
         Pconf.cleanPluginConf(['dist']),
-        Pconf.definePluginConf,
         Pconf.bannerPluginConf('This file is created or modified by lushijie at ' + moment().format('YYYY-MM-DD h:mm:ss')),
-        Pconf.uglifyJsPluginConf,
-        Pconf.extractTextPluginConf,
+        Pconf.definePluginConf,
+        Pconf.uglifyJsPluginConf(),
+        Pconf.extractTextPluginConf(),
         Pconf.commonsChunkPluginConf,
         Pconf.minChunkSizePluginConf(),
         Pconf.hotModuleReplacementPluginConf(),

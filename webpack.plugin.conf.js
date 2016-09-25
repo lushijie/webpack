@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-25 13:04:03
+* @Last Modified time: 2016-09-25 13:14:17
 */
 
 var webpack = require('webpack');
@@ -60,19 +60,27 @@ module.exports = {
     ], path.resolve(__dirname,"dist")),
 
 	//css 以文件类型引入插件
-	'extractTextPluginConf': new ExtractTextPlugin("[name].bundle.css",{
-	    //allChunks: false,
-	    //disable: false
-	}),
+	'extractTextPluginConf': function(fileName, options) {
+        fileName = fileName || "[name].bundle.css";
+        options = objectAssign({}, options);
+        return (
+            new ExtractTextPlugin(fileName, options)
+        )
+    },
 
 	 //js压缩组件
-	'uglifyJsPluginConf': new webpack.optimize.UglifyJsPlugin({
-	    compress: {
-	        //supresses warnings, usually from module minification
-	        warnings: false
-	    },
-	    except: ['$super', '$', 'exports', 'require']	//排除关键字
-	}),
+	'uglifyJsPluginConf': function(options) {
+        var optionsDefault = {
+            compress: {
+                warnings: false
+            },
+            except: ['$super', '$', 'exports', 'require']
+        };
+        options = objectAssign(optionsDefault, options);
+        return (
+            new webpack.optimize.UglifyJsPlugin(options)
+        )
+    },
 
 	//为打包之后的各个文件添加文件说明头部
 	'bannerPluginConf': function (bannerText) {
@@ -99,8 +107,7 @@ module.exports = {
 	'commonsChunkPluginConf': new webpack.optimize.CommonsChunkPlugin({
 	    name: "common",
 	    filename: "common.bundle.js",
-	    //最少两个模块中存在才进行抽离common
-	    minChunks: 2
+	    minChunks: 2, //最少两个模块中存在才进行抽离common
 	    //指定common从哪些chunks中提取而来，(Only use these entries)
 	    // chunks:['home','admin']
 	}),
