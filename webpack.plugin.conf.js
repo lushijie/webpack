@@ -2,9 +2,8 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-25 13:35:57
+* @Last Modified time: 2016-09-25 13:49:55
 */
-
 var webpack = require('webpack');
 var path = require('path');
 var moment = require('moment');
@@ -16,8 +15,9 @@ var TransferWebpackPlugin = require('transfer-webpack-plugin');
 
 module.exports = {
 
-	//空plugin
-	'noopPluginConf': function(){
+	//noop plugin
+    //eg: NODE_ENV == 'development' ? Pconf.noopPluginConf() : Pconf.uglifyJsPluginConf()
+	'noopPluginConf': function() {
         return (
             function() {
 
@@ -25,8 +25,9 @@ module.exports = {
         )
 	},
 
-	//jquery(其他类库亦如此)引入全局的方案
-	//可以jquery变成全局变量，不用在自己文件require('jquery')了
+	//jquery(其他类库亦如此)引入全局的方案，之后不用在每个文件中require('jquery')
+    //eg: options = {$: 'jquery'} 相当于每个页面中 var $ = require('jquery')
+    //注意与definePluginConf的区分
 	'providePluginConf': function(options) {
         options = objectAssign({}, options);
         return (
@@ -34,7 +35,8 @@ module.exports = {
         )
     },
 
-	// definePlugin 会把定义的string 变量插入到Js代码中
+	//definePlugin 会把定义的string 变量插入到所有JS代码中
+    //注意与providePluginConf的区分
 	'definePluginConf': function(options) {
         options = objectAssign({}, options);
         return (
@@ -51,7 +53,7 @@ module.exports = {
         )
     },
 
-	//css 以文件类型引入插件
+	//css 以文件类型引入而不再内嵌到HTML中
 	'extractTextPluginConf': function(fileName, options) {
         fileName = fileName || "[name].bundle.css";
         options = objectAssign({}, options);
@@ -74,7 +76,7 @@ module.exports = {
         )
     },
 
-	//为打包之后的各个文件添加文件说明头部
+	//为打包之后的各个文件添加说明头部
 	'bannerPluginConf': function (bannerText) {
         bannerText = bannerText || 'This file is modified at ' + moment().format('YYYY-MM-DD h:mm:ss');
         return (
@@ -101,8 +103,7 @@ module.exports = {
             name: "common",
             filename: "common.bundle.js",
             minChunks: 2, //最少两个模块中存在才进行抽离common
-            //指定common从哪些chunks中提取而来，(Only use these entries)
-            // chunks:['home','admin']
+            // chunks:['home','admin']//指定只从哪些chunks中提取common
         };
         options = objectAssign(optionsDefault, options);
         return (
@@ -110,14 +111,12 @@ module.exports = {
         )
     },
 
-	// This plugin prevents Webpack from creating chunks
-	// that would be too small to be worth loading separately
-	//最小分块大小
+	//最小分块大小，小于minChunkSize将不生成分块
 	'minChunkSizePluginConf': function(minChunkSize) {
         minChunkSize = minChunkSize || 51200;
         return (
             new webpack.optimize.MinChunkSizePlugin({
-                minChunkSize: minChunkSize // ~50kb
+                minChunkSize: minChunkSize
             })
         )
     },
@@ -136,7 +135,6 @@ module.exports = {
         )
     },
 
-	//simplifies creation of HTML files to serve your webpack bundles
 	//如果有多个页面需要写多个htmlWebPackPluginConf
 	'htmlWebPackPluginConf': function(options) {
         options = objectAssign({}, options);

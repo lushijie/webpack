@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-03 14:30:52
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-09 12:37:02
+* @Last Modified time: 2016-09-25 14:02:31
 */
 import 'rjs/common/base.js';
 import 'rcss/page/home.scss';
@@ -24,6 +24,6 @@ console.log('This is home.js');
 console.log('hello=',VAR_INJECT);
 
 //imports-loader
-console.log(config);//对象
-console.log(testVar);//变量
-console.log(jqueryBak(window).width());//module
+console.log(importObj);//对象
+console.log(importVar);//变量
+console.log(importLib(window).width());//module
