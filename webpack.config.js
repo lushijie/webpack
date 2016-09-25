@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-25 13:19:41
+* @Last Modified time: 2016-09-25 13:26:37
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -21,7 +21,7 @@ var CONST_INJECT = {
     }
 }
 var NODE_ENV = JSON.parse(JSON.stringify(process.env.NODE_ENV || 'development'));
-//console.log('current ENV:', NODE_ENV);
+var bannerText = 'This file is created or modified by lushijie at ' + moment().format('YYYY-MM-DD h:mm:ss');
 
 module.exports = {
     //dev=cheap-module-eval-source-map
@@ -127,7 +127,7 @@ module.exports = {
     },
     plugins: [
         Pconf.cleanPluginConf(['dist']),
-        Pconf.bannerPluginConf('This file is created or modified by lushijie at ' + moment().format('YYYY-MM-DD h:mm:ss')),
+        Pconf.bannerPluginConf(bannerText),
         Pconf.definePluginConf({
             VAR_INJECT: CONST_INJECT[
                 JSON.parse(JSON.stringify(process.env.NODE_ENV|| 'development')) == 'development' ?
@@ -136,10 +136,10 @@ module.exports = {
         }),
         Pconf.uglifyJsPluginConf(),
         Pconf.extractTextPluginConf(),
-        Pconf.commonsChunkPluginConf,
+        Pconf.commonsChunkPluginConf(),
         Pconf.minChunkSizePluginConf(),
         Pconf.hotModuleReplacementPluginConf(),
-        Pconf.transferWebpackPluginConf,
+        Pconf.transferWebpackPluginConf(),
         Pconf.dedupePluginConf(),
         Pconf.providePluginConf({
             $: 'jquery'

@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-25 13:18:58
+* @Last Modified time: 2016-09-25 13:28:50
 */
 
 var webpack = require('webpack');
@@ -43,10 +43,13 @@ module.exports = {
     },
 
 	//文件拷贝插件
-	'transferWebpackPluginConf': new TransferWebpackPlugin([
-      // {from: path.resolve(__dirname,"app")},
-      // {from: path.resolve(__dirname,"public")},
-    ], path.resolve(__dirname,"dist")),
+	'transferWebpackPluginConf': function(froms, basePath) {
+        froms = froms || [];
+        basePath = basePath || path.join(__dirname, 'dist');
+        return (
+            new TransferWebpackPlugin(froms, basePath)
+        )
+    },
 
 	//css 以文件类型引入插件
 	'extractTextPluginConf': function(fileName, options) {
@@ -73,7 +76,7 @@ module.exports = {
 
 	//为打包之后的各个文件添加文件说明头部
 	'bannerPluginConf': function (bannerText) {
-        bannerText = bannerText || 'This file is created or modified at ' + moment().format('YYYY-MM-DD h:mm:ss');
+        bannerText = bannerText || 'This file is modified at ' + moment().format('YYYY-MM-DD h:mm:ss');
         return (
             new webpack.BannerPlugin(bannerText)
         )
@@ -93,13 +96,19 @@ module.exports = {
     },
 
 	//提取common文件模块
-	'commonsChunkPluginConf': new webpack.optimize.CommonsChunkPlugin({
-	    name: "common",
-	    filename: "common.bundle.js",
-	    minChunks: 2, //最少两个模块中存在才进行抽离common
-	    //指定common从哪些chunks中提取而来，(Only use these entries)
-	    // chunks:['home','admin']
-	}),
+	'commonsChunkPluginConf': function(options) {
+        var optionsDefault = {
+            name: "common",
+            filename: "common.bundle.js",
+            minChunks: 2, //最少两个模块中存在才进行抽离common
+            //指定common从哪些chunks中提取而来，(Only use these entries)
+            // chunks:['home','admin']
+        };
+        options = objectAssign(optionsDefault, options);
+        return (
+            new webpack.optimize.CommonsChunkPlugin(options)
+        )
+    },
 
 	// This plugin prevents Webpack from creating chunks
 	// that would be too small to be worth loading separately
