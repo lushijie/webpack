@@ -2,10 +2,11 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-23 18:03:17
+* @Last Modified time: 2016-09-25 13:00:11
 */
 var webpack = require('webpack');
 var path = require('path');
+var moment = require('moment');
 var Pconf = require('./webpack.plugin.conf.js');
 
 var NODE_ENV = JSON.parse(JSON.stringify(process.env.NODE_ENV || 'development'));
@@ -114,20 +115,20 @@ module.exports = {
         ]
     },
     plugins: [
-        Pconf.cleanPluginConf,
+        Pconf.cleanPluginConf(['dist']),
         Pconf.definePluginConf,
-        Pconf.bannerPluginConf,
+        Pconf.bannerPluginConf('This file is created or modified by lushijie at ' + moment().format('YYYY-MM-DD h:mm:ss')),
         Pconf.uglifyJsPluginConf,
         Pconf.extractTextPluginConf,
         Pconf.commonsChunkPluginConf,
-        Pconf.minChunkSizePluginConf,
-        Pconf.hotModuleReplacementPluginConf,
+        Pconf.minChunkSizePluginConf(),
+        Pconf.hotModuleReplacementPluginConf(),
         Pconf.transferWebpackPluginConf,
-        Pconf.dedupePluginConf,
+        Pconf.dedupePluginConf(),
         Pconf.providePluginConf,
         Pconf.htmlWebPackPluginConf
-        //Pconf.noopPluginConf是一个空操作
-        //NODE_ENV == 'development' ? Pconf.htmlWebPackPluginConf : Pconf.noopPluginConf
+        //Pconf.noopPluginConf()是一个空操作
+        //NODE_ENV == 'development' ? Pconf.htmlWebPackPluginConf : Pconf.noopPluginConf()
     ],
     resolve:{
         root: [

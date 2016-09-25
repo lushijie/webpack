@@ -2,12 +2,13 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-23 18:10:49
+* @Last Modified time: 2016-09-25 13:00:29
 */
 
 var webpack = require('webpack');
 var path = require('path');
 var moment = require('moment');
+var objectAssign = require('object-assign');
 var CleanPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -29,7 +30,11 @@ module.exports = {
 
 	//空plugin
 	'noopPluginConf': function(){
+        return (
+            function() {
 
+            }
+        )
 	},
 
 	//jquery(其他类库亦如此)引入全局的方案
@@ -67,14 +72,25 @@ module.exports = {
 	}),
 
 	//为打包之后的各个文件添加文件说明头部
-	'bannerPluginConf': new webpack.BannerPlugin('This file is created or modified by lushijie at ' + moment().format('YYYY-MM-DD h:mm:ss')),
+	'bannerPluginConf': function (bannerText) {
+        bannerText = bannerText || 'This file is created or modified at ' + moment().format('YYYY-MM-DD h:mm:ss');
+        return (
+            new webpack.BannerPlugin(bannerText)
+        )
+    },
 
 	//下次打包清除上一次打包文件
-	'cleanPluginConf': new CleanPlugin(['dist'], {
-	  root: __dirname,
-	  verbose: true,
-	  dry: false
-	}),
+	'cleanPluginConf': function(paths, options) {
+        var optionsDefault = {
+            root: __dirname,
+            verbose: true,
+            dry: false
+        };
+        options = objectAssign(optionsDefault, options);
+        return (
+            new CleanPlugin(paths , options)
+        )
+    },
 
 	//提取common文件模块
 	'commonsChunkPluginConf': new webpack.optimize.CommonsChunkPlugin({
@@ -89,15 +105,28 @@ module.exports = {
 	// This plugin prevents Webpack from creating chunks
 	// that would be too small to be worth loading separately
 	//最小分块大小
-	'minChunkSizePluginConf': new webpack.optimize.MinChunkSizePlugin({
-	    minChunkSize: 51200, // ~50kb
-	}),
+	'minChunkSizePluginConf': function(minChunkSize) {
+        minChunkSize = minChunkSize || 51200;
+        return (
+            new webpack.optimize.MinChunkSizePlugin({
+                minChunkSize: minChunkSize // ~50kb
+            })
+        )
+    },
 
 	//js重新编译动态刷新浏览器插件
-	'hotModuleReplacementPluginConf': new webpack.HotModuleReplacementPlugin(),
+	'hotModuleReplacementPluginConf': function() {
+        return (
+            new webpack.HotModuleReplacementPlugin()
+        )
+    },
 
 	// 把相似的chunks和files合并来更好的缓存
-	'dedupePluginConf': new webpack.optimize.DedupePlugin(),
+	'dedupePluginConf': function() {
+        return (
+            new webpack.optimize.DedupePlugin()
+        )
+    },
 
 	//simplifies creation of HTML files to serve your webpack bundles
 	//如果有多个页面需要写多个htmlWebPackPluginConf
