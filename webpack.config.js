@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-25 13:00:11
+* @Last Modified time: 2016-09-25 13:04:55
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -125,7 +125,9 @@ module.exports = {
         Pconf.hotModuleReplacementPluginConf(),
         Pconf.transferWebpackPluginConf,
         Pconf.dedupePluginConf(),
-        Pconf.providePluginConf,
+        Pconf.providePluginConf({
+            $: 'jquery'
+        }),
         Pconf.htmlWebPackPluginConf
         //Pconf.noopPluginConf()是一个空操作
         //NODE_ENV == 'development' ? Pconf.htmlWebPackPluginConf : Pconf.noopPluginConf()
