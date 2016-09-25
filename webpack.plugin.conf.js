@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-25 13:14:17
+* @Last Modified time: 2016-09-25 13:18:58
 */
 
 var webpack = require('webpack');
@@ -13,18 +13,6 @@ var CleanPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var TransferWebpackPlugin = require('transfer-webpack-plugin');
-
-var CONST_INJECT = {
-	ENV:{
-		a: 123,
-		//替换规则是 API_URL = 后面的值，所以要添加 JSON.stringify
-		"API_URL": JSON.stringify('http://localhost:8080/bands'),
-	},
-	PUB:{
-		"API_URL": JSON.stringify('http://online:8080/bands'),
-		b: 456
-	}
-}
 
 module.exports = {
 
@@ -47,11 +35,12 @@ module.exports = {
     },
 
 	// definePlugin 会把定义的string 变量插入到Js代码中
-	'definePluginConf': new webpack.DefinePlugin({
-	  VAR_INJECT: CONST_INJECT[
-	  	JSON.parse(JSON.stringify(process.env.NODE_ENV|| 'development')) == 'development' ? 'ENV':'PUB'
-	  ]
-	}),
+	'definePluginConf': function(options) {
+        options = objectAssign({}, options);
+        return (
+            new webpack.DefinePlugin(options)
+        )
+    },
 
 	//文件拷贝插件
 	'transferWebpackPluginConf': new TransferWebpackPlugin([
