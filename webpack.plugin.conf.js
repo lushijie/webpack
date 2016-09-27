@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-25 13:49:55
+* @Last Modified time: 2016-09-27 13:56:08
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -38,7 +38,12 @@ module.exports = {
 	//definePlugin 会把定义的string 变量插入到所有JS代码中
     //注意与providePluginConf的区分
 	'definePluginConf': function(options) {
-        options = objectAssign({}, options);
+        options = objectAssign({
+            //Note: by default, React will be in development mode, which is slower, and not advised for production.
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
+        }, options);
         return (
             new webpack.DefinePlugin(options)
         )

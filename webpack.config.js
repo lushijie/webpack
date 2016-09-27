@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-27 09:04:15
+* @Last Modified time: 2016-09-27 13:55:24
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -151,11 +151,7 @@ module.exports = {
         Pconf.transferWebpackPluginConf(),
         Pconf.dedupePluginConf(),
         Pconf.providePluginConf({
-            $: 'jquery',
-            //Note: by default, React will be in development mode, which is slower, and not advised for production.
-            'process.env': {
-                NODE_ENV: JSON.stringify('production')
-            }
+            $: 'jquery'
         }),
         Pconf.htmlWebPackPluginConf(htmlPluginOptions)
     ],
