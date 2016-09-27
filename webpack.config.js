@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-27 13:55:24
+* @Last Modified time: 2016-09-27 14:03:12
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -12,18 +12,16 @@ var Pconf = require('./webpack.plugin.conf.js');
 var NODE_ENV = JSON.parse(JSON.stringify(process.env.NODE_ENV || 'development'));
 var CONST_INJECT = {
     ENV:{
-        a: 123,
+        'a': JSON.stringify('development variable'),
         //替换规则是 API_URL = 后面的值，所以要添加 JSON.stringify
-        "API_URL": JSON.stringify('http://localhost/url'),
+        'API_URL': JSON.stringify('http://localhost/url'),
     },
     PUB:{
-        "API_URL": JSON.stringify('http://online/url'),
-        b: 456
+        'a': 123123,
+        'API_URL': JSON.stringify('http://online/url')
     }
 };
-var VAR_INJECT = {
-    VAR_INJECT: CONST_INJECT[NODE_ENV == 'development' ? 'ENV':'PUB']
-};
+var VAR_INJECT = {VAR_INJECT: CONST_INJECT[NODE_ENV == 'development' ? 'ENV':'PUB']};
 var bannerText = 'This file is modified by lushijie at ' + moment().format('YYYY-MM-DD h:mm:ss');
 var htmlPluginOptions = {
         filename: 'views/home/index.html',// 访问地址 http://127.0.0.1:5050/dist/views/home/index.html
