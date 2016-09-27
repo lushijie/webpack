@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-27 14:03:12
+* @Last Modified time: 2016-09-27 15:13:28
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -10,19 +10,28 @@ var moment = require('moment');
 var Pconf = require('./webpack.plugin.conf.js');
 
 var NODE_ENV = JSON.parse(JSON.stringify(process.env.NODE_ENV || 'development'));
-var CONST_INJECT = {
+var DEFINE_INJECT = {
     ENV:{
         'a': JSON.stringify('development variable'),
         //替换规则是 API_URL = 后面的值，所以要添加 JSON.stringify
         'API_URL': JSON.stringify('http://localhost/url'),
+        //Please keep process.env
+        'process.env': {
+            //Note: by default, React will be in development mode, which is slower, and not advised for production.
+            NODE_ENV: JSON.stringify('development')
+        }
     },
     PUB:{
         'a': 123123,
-        'API_URL': JSON.stringify('http://online/url')
+        'API_URL': JSON.stringify('http://online/url'),
+        //Please keep process.env
+        'process.env': {
+            NODE_ENV: JSON.stringify('production')
+        }
     }
 };
-var VAR_INJECT = {VAR_INJECT: CONST_INJECT[NODE_ENV == 'development' ? 'ENV':'PUB']};
-var bannerText = 'This file is modified by lushijie at ' + moment().format('YYYY-MM-DD h:mm:ss');
+var definePluginOptions = {DEFINE_INJECT: DEFINE_INJECT[NODE_ENV == 'development' ? 'ENV':'PUB']};
+var bannerPluginOptions = 'This file is modified by lushijie at ' + moment().format('YYYY-MM-DD h:mm:ss');
 var htmlPluginOptions = {
         filename: 'views/home/index.html',// 访问地址 http://127.0.0.1:5050/dist/views/home/index.html
         title: 'Webpack-Seed',
@@ -64,7 +73,7 @@ module.exports = {
         home: './public/resource/js/page/home.js',
         admin: './public/resource/js/page/admin.js',
         vendor: [
-            'jquery'
+            //'jquery'
             // 1. vendor 引入主要是为了提取各个模块的common部分, 此处（home,admin,jquery 会提取common,生成common.js）, 不用vendor,jquery会被单独打入home.js不利于缓存.
             //2. 在页面中引入vendor.bundle.js不意味着将jquery主动注入了，依然需要providePlugin支持或者在各个模块手动require方式引入
         ]
@@ -91,7 +100,7 @@ module.exports = {
             {
                 //通过imports-loader向特定模块注入变量，注入模块
                 test: path.join(__dirname, 'public/resource/js/page/home.js'),
-                loader: "imports-loader?importLib=jquery,importVar=>'sdfsfdsdf',importObj=>{size:50}"
+                loader: "imports?importLib=jquery,importVar=>'variable',importObj=>{size:50}"
             },
             {
                 //1.css文件外联方式实现
@@ -139,8 +148,8 @@ module.exports = {
     },
     plugins: [
         Pconf.cleanPluginConf(['dist']),
-        Pconf.bannerPluginConf(bannerText),
-        Pconf.definePluginConf(VAR_INJECT),
+        Pconf.bannerPluginConf(bannerPluginOptions),
+        Pconf.definePluginConf(definePluginOptions),
         Pconf.uglifyJsPluginConf(),
         Pconf.extractTextPluginConf(),
         Pconf.commonsChunkPluginConf(),

@@ -51,7 +51,7 @@
   "globals": {
     "React": true,
     "$": true,
-    "VAR_INJECT": true,
+    "DEFINE_INJECT": true,
     "importObj": true,
     "importVar": true,
     "importLib": true

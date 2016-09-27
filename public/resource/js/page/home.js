@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-03 14:30:52
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-27 14:07:11
+* @Last Modified time: 2016-09-27 15:11:58
 */
 import 'rjs/common/base.js';
 import 'rcss/page/home.scss';
@@ -14,10 +14,10 @@ img.src = require('rimg/common/catxiu.png');
 $('body').append(img);
 
 //definePluginCnf
-console.log('definePlugin import -->',VAR_INJECT);
+console.log('definePlugin import -->', DEFINE_INJECT);
 
 //1.providePlugin
-console.log('jquery引入测试,$(window).width()=',$(window).width());
+console.log('jquery引入测试,$(window).width()=', $(window).width());
 
 //2.imports-loader
 console.log('imports-loader Object -->', importObj);//对象
