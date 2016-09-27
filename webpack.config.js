@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-25 14:08:27
+* @Last Modified time: 2016-09-27 09:04:15
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -44,7 +44,7 @@ var htmlPluginOptions = {
 module.exports = {
     //dev = cheap-module-eval-source-map
     //online = cheap-module-source-map, 没有列信息,外联.map这样.map文件只会在F12开启时进行下载
-    devtool: 'cheap-module-eval-source-map',
+    devtool: (NODE_ENV == 'development') ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
 
     //基础目录（绝对路径），entry根据此路径进行解析
     context: __dirname,
@@ -150,7 +150,13 @@ module.exports = {
         Pconf.hotModuleReplacementPluginConf(),
         Pconf.transferWebpackPluginConf(),
         Pconf.dedupePluginConf(),
-        Pconf.providePluginConf({$: 'jquery'}),
+        Pconf.providePluginConf({
+            $: 'jquery',
+            //Note: by default, React will be in development mode, which is slower, and not advised for production.
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
+        }),
         Pconf.htmlWebPackPluginConf(htmlPluginOptions)
     ],
     resolve:{
@@ -192,7 +198,6 @@ module.exports = {
         // }
     },
     postcss: function () {
-        // postcss 插件
         return {
             plugins: [require('precss'), require('autoprefixer')]
         }
