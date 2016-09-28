@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-27 15:13:28
+* @Last Modified time: 2016-09-28 10:25:47
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -125,7 +125,7 @@ module.exports = {
             {
                 //图片如果小于8192kb将会以base64形式存在，否则产生图片文件
                 test: /\.(png|jpg|gif|ttf|eot|svg|woff|woff2)$/,
-                loader: 'url-loader?limit=8192&name=./img/[name].[ext]'
+                loader: 'url-loader?limit=8192&name=./assets/[name].[ext]'
             },
             {
                 test: /\.jsx?$/,
