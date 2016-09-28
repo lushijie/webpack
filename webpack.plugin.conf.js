@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-27 15:07:20
+* @Last Modified time: 2016-09-28 15:51:54
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -109,6 +109,13 @@ module.exports = {
             }
         )
 	},
+
+    //根据模块调用次数，给模块分配ids，常被调用的ids分配更短的id，使得ids可预测，降低文件大小，该模块推荐使用
+    'OccurrenceOrderPluginConf': function() {
+        return (
+            new webpack.optimize.OccurrenceOrderPlugin()
+        )
+    },
 
 	//jquery(其他类库亦如此)引入全局的方案，之后不用在每个文件中require('jquery')
     //eg: options = {$: 'jquery'} 相当于每个页面中 var $ = require('jquery')

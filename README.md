@@ -16,4 +16,4 @@
 	浏览器访问： http://127.0.0.1:5050/dist/views/home/index.html
 
 ###项目正式部署生成编译文件
-	第三步： npm run publish
+	第三步： npm run release

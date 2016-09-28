@@ -2,14 +2,15 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-28 10:25:47
+* @Last Modified time: 2016-09-28 15:56:10
 */
 var webpack = require('webpack');
 var path = require('path');
 var moment = require('moment');
 var Pconf = require('./webpack.plugin.conf.js');
 
-var NODE_ENV = JSON.parse(JSON.stringify(process.env.NODE_ENV || 'development'));
+var isDev = JSON.parse(JSON.stringify(process.env.NODE_ENV || 'development')) == 'development';
+
 var DEFINE_INJECT = {
     ENV:{
         'a': JSON.stringify('development variable'),
@@ -30,7 +31,7 @@ var DEFINE_INJECT = {
         }
     }
 };
-var definePluginOptions = {DEFINE_INJECT: DEFINE_INJECT[NODE_ENV == 'development' ? 'ENV':'PUB']};
+var definePluginOptions = {DEFINE_INJECT: DEFINE_INJECT[isDev ? 'ENV':'PUB']};
 var bannerPluginOptions = 'This file is modified by lushijie at ' + moment().format('YYYY-MM-DD h:mm:ss');
 var htmlPluginOptions = {
         filename: 'views/home/index.html',// 访问地址 http://127.0.0.1:5050/dist/views/home/index.html
@@ -51,7 +52,7 @@ var htmlPluginOptions = {
 module.exports = {
     //dev = cheap-module-eval-source-map
     //online = cheap-module-source-map, 没有列信息,外联.map这样.map文件只会在F12开启时进行下载
-    devtool: (NODE_ENV == 'development') ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
+    devtool: isDev ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
 
     //基础目录（绝对路径），entry根据此路径进行解析
     context: __dirname,
@@ -150,17 +151,18 @@ module.exports = {
         Pconf.cleanPluginConf(['dist']),
         Pconf.bannerPluginConf(bannerPluginOptions),
         Pconf.definePluginConf(definePluginOptions),
-        Pconf.uglifyJsPluginConf(),
+        !isDev ? Pconf.uglifyJsPluginConf() : Pconf.noopPluginConf(),
         Pconf.extractTextPluginConf(),
         Pconf.commonsChunkPluginConf(),
-        Pconf.minChunkSizePluginConf(),
-        Pconf.hotModuleReplacementPluginConf(),
-        Pconf.transferWebpackPluginConf(),
-        Pconf.dedupePluginConf(),
+        !isDev ? Pconf.minChunkSizePluginConf() : Pconf.noopPluginConf(),
+        isDev  ? Pconf.hotModuleReplacementPluginConf() : Pconf.noopPluginConf(),
+        !isDev ? Pconf.OccurrenceOrderPluginConf() : Pconf.noopPluginConf(),
+        !isDev ? Pconf.dedupePluginConf() : Pconf.noopPluginConf(),
         Pconf.providePluginConf({
             $: 'jquery'
         }),
-        Pconf.htmlWebPackPluginConf(htmlPluginOptions)
+        Pconf.htmlWebPackPluginConf(htmlPluginOptions),
+        //Pconf.transferWebpackPluginConf()
     ],
     resolve:{
         root: [
