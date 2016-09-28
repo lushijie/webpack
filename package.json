@@ -7,7 +7,7 @@
     "start": "npm run dev",
     "mac": "npm run dev",
     "premac": "npm run chrome",
-    "chrome": "open /Applications/Google' 'Chrome.app/ http://127.0.0.1:5050/dist/views/home/index.html",
+    "chrome": "open /Applications/Google' 'Chrome.app/ http://127.0.0.1:5050/dist/views/home.html",
     "dev": "export NODE_ENV=development && webpack-dev-server --progress --profile ",
     "debug": "export NODE_ENV=development && webpack",
     "release": "NODE_ENV=production webpack --progress --profile"

@@ -2,15 +2,15 @@
 * @Author: lushijie
 * @Date:   2016-03-03 14:30:52
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-27 15:11:58
+* @Last Modified time: 2016-09-28 16:22:45
 */
-import 'rjs/common/base.js';
+import 'rjs/common/common.js';
 import 'rcss/page/home.scss';
 // 方法1： 引入 node_module中的类库,可以使用providePlugin引入
 // 方法2： import $ from 'jquery';
 
 var img = document.createElement('img');
-img.src = require('rimg/common/catxiu.png');
+img.src = require('rimg/home/catxiu.png');
 $('body').append(img);
 
 //definePluginCnf

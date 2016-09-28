@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-28 15:56:10
+* @Last Modified time: 2016-09-28 16:20:00
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -34,12 +34,12 @@ var DEFINE_INJECT = {
 var definePluginOptions = {DEFINE_INJECT: DEFINE_INJECT[isDev ? 'ENV':'PUB']};
 var bannerPluginOptions = 'This file is modified by lushijie at ' + moment().format('YYYY-MM-DD h:mm:ss');
 var htmlPluginOptions = {
-        filename: 'views/home/index.html',// 访问地址 http://127.0.0.1:5050/dist/views/home/index.html
+        filename: 'views/home.html',// 访问地址 http://127.0.0.1:5050/dist/views/home.html
         title: 'Webpack-Seed',
         hash: true,
         inject: false, //此时不注入相关的js,否则如果之前手动引入了js，可能导致重复引入
-        template: path.resolve(__dirname,'app/views/home/index.html'),
-        favicon:path.resolve(__dirname,'public/favicon.ico'),
+        template: path.resolve(__dirname,'src/views/home.html'),
+        favicon:path.resolve(__dirname,'src/img/common/favicon.ico'),
         minify:{
             removeComments: false,
             collapseWhitespace: false,
@@ -62,20 +62,19 @@ module.exports = {
     //在开启commonsChunkPluginentry 为字符串，生成 common.bundle.js 与 main.bundle.js
 
     //entry 情况2，数组
-    //eg: entry: ['./public/resource/js/page/home.js','./public/resource/js/page/admin.js'],
+    //eg: entry: ['./public/resource/js/page/home.js'],
     //在开启commonsChunkPlugin情况下生成common.bundle.js与main.bundle.js
     //如果没有开启commonsChunkPlugin只会生成一个main.bundle.js
 
     //entry 情况3，对象
-    //eg: entry: {home: './public/resource/js/page/home.js', admin: './public/resource/js/page/admin.js',},
-    //在开启commonsChunkPlugin情况下生成 common.bundle.js 与 home.bundle.js 与 admin.bundle.js
+    //eg: entry: {home: './public/resource/js/page/home.js'},
+    //在开启commonsChunkPlugin情况下生成 common.bundle.js 与 home.bundle.js
 
     entry: {
-        home: './public/resource/js/page/home.js',
-        admin: './public/resource/js/page/admin.js',
+        home: './src/js/page/home.js',
         vendor: [
             //'jquery'
-            // 1. vendor 引入主要是为了提取各个模块的common部分, 此处（home,admin,jquery 会提取common,生成common.js）, 不用vendor,jquery会被单独打入home.js不利于缓存.
+            // 1. vendor 引入主要是为了提取各个模块的common部分, 此处（home,jquery 会提取common,生成common.js）, 不用vendor,jquery会被单独打入home.js不利于缓存.
             //2. 在页面中引入vendor.bundle.js不意味着将jquery主动注入了，依然需要providePlugin支持或者在各个模块手动require方式引入
         ]
     },
@@ -100,7 +99,7 @@ module.exports = {
         loaders: [
             {
                 //通过imports-loader向特定模块注入变量，注入模块
-                test: path.join(__dirname, 'public/resource/js/page/home.js'),
+                test: path.join(__dirname, 'src/js/page/home.js'),
                 loader: "imports?importLib=jquery,importVar=>'variable',importObj=>{size:50}"
             },
             {
@@ -132,7 +131,7 @@ module.exports = {
                 test: /\.jsx?$/,
                 loader: 'babel-loader',
                 include: [
-                    path.join(__dirname, 'public/resource/js'),
+                    path.join(__dirname, 'src/js'),
                 ],
                 exclude: [
                   path.join(__dirname, 'node_modules'),
@@ -171,9 +170,9 @@ module.exports = {
         extensions: ['', '.js', '.jsx'],
         alias:{
             //别名，可在引用的时候使用缩写
-            'rjs': 'public/resource/js',
-            'rcss': 'public/resource/css',
-            'rimg': 'public/resource/img'
+            'rjs': 'src/js',
+            'rcss': 'src/css',
+            'rimg': 'src/img'
         }
     },
     devServer: {
