@@ -3,10 +3,10 @@
 	plugin的配置项可以查看相应的plugin的npm网站，可以根据具体项目灵活设计。
 
 ###运行安装依赖
-	第一步： npm install
+	npm install
 
 ###项目开发运行
-	第二步： npm start
+	npm start
 	1.	未启用htmlWebpackPlugin的情况下
 	备注：      此时index.html的title不会被动态替换，先要自行修改index.html的title
 	浏览器访问： http://127.0.0.1:5050/src/views/home.html
@@ -16,4 +16,4 @@
 	浏览器访问： http://127.0.0.1:5050/dist/views/home.html
 
 ###项目正式部署生成编译文件
-	第三步： npm run release
+	npm run release
