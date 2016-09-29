@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-03 14:30:52
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-28 16:22:45
+* @Last Modified time: 2016-09-29 15:54:59
 */
 import 'rjs/common/common.js';
 import 'rcss/page/home.scss';
@@ -12,6 +12,9 @@ import 'rcss/page/home.scss';
 var img = document.createElement('img');
 img.src = require('rimg/home/catxiu.png');
 $('body').append(img);
+
+var mock = require('mock/data.json');
+console.log(mock);
 
 //definePluginCnf
 console.log('definePlugin import -->', DEFINE_INJECT);

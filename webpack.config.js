@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-28 16:20:00
+* @Last Modified time: 2016-09-29 15:55:39
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -128,6 +128,10 @@ module.exports = {
                 loader: 'url-loader?limit=8192&name=./assets/[name].[ext]'
             },
             {
+                test: /\.json$/,
+                loader: 'json'
+            },
+            {
                 test: /\.jsx?$/,
                 loader: 'babel-loader',
                 include: [
@@ -172,7 +176,8 @@ module.exports = {
             //别名，可在引用的时候使用缩写
             'rjs': 'src/js',
             'rcss': 'src/css',
-            'rimg': 'src/img'
+            'rimg': 'src/img',
+            'mock': 'src/mock'
         }
     },
     devServer: {
