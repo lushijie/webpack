@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-29 15:55:39
+* @Last Modified time: 2016-11-07 10:17:01
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -109,7 +109,7 @@ module.exports = {
 
                 //2.css文件内联方式实现
                 test:/\.css$/,
-                loader: "style!css!postcss"
+                loader: (NODE_ENV == 'development') ? "style!css?sourceMap!postcss?sourceMap" : "style!css!postcss"
                 //1.可以通过 postcss-js 插件处理写在 js 中的样式loader: "style-loader!css-loader!postcss-loader?parser=postcss-js"
                 //2.也可以通过 babel 结合 postcss-js 处理 es6 语法中的样式loader: "style-loader!css-loader!postcss-loader?parser=postcss-js!babel"
             },
@@ -120,7 +120,7 @@ module.exports = {
 
                 //2.scss 样式文件内敛方式实现
                 test:/\.scss$/,
-                loader: "style!css!postcss!sass"
+                loader: (NODE_ENV == 'development') ? "style!css?sourceMap!postcss?sourceMap!sass?sourceMap" : "style!css!postcss!sass"
             },
             {
                 //图片如果小于8192kb将会以base64形式存在，否则产生图片文件
