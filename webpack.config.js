@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-11-11 17:57:40
+* @Last Modified time: 2016-11-11 18:18:37
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -109,25 +109,13 @@ module.exports = {
         ]
     },
     plugins: [
-        //Pconf.cleanPluginConf(['dist']),
-        Pconf.bannerPluginConf(setting.bannerPluginOptions),
         Pconf.definePluginConf(setting.definePluginOptions),
-        !setting.isDev ? Pconf.uglifyJsPluginConf() : Pconf.noopPluginConf(),
-        Pconf.extractTextPluginConf(),
+        !setting.isDev ? Pconf.uglifyJsPluginConf():Pconf.noopPluginConf(),
         Pconf.commonsChunkPluginConf(),
-        !setting.isDev ? Pconf.minChunkSizePluginConf() : Pconf.noopPluginConf(),
-        setting.isDev  ? Pconf.hotModuleReplacementPluginConf() : Pconf.noopPluginConf(),
-        !setting.isDev ? Pconf.OccurrenceOrderPluginConf() : Pconf.noopPluginConf(),
-        !setting.isDev ? Pconf.dedupePluginConf() : Pconf.noopPluginConf(),
-        Pconf.providePluginConf({
-            $: 'jquery'
-        }),
+        setting.isDev ? Pconf.hotModuleReplacementPluginConf():Pconf.noopPluginConf(),
+        Pconf.providePluginConf(setting.providePluginOptions),
         Pconf.htmlWebPackPluginConf(setting.htmlPluginOptions),
-        new webpack.DllReferencePlugin({
-          context: __dirname,
-          manifest: require('./manifest.json'),
-        }),
-        //Pconf.transferWebpackPluginConf()
+        Pconf.dllPluginConf(),
     ],
     resolve:{
         root: [
