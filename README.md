@@ -7,12 +7,6 @@
 
 ###项目开发运行
 	npm start
-	1.	未启用htmlWebpackPlugin的情况下
-	备注：      此时index.html的title不会被动态替换，先要自行修改index.html的title
-	浏览器访问： http://127.0.0.1:5050/src/views/home.html
-
-	2.	启用htmlWebPackPlugin的情况下
-	备注：      此时index.html的title被替换会被插件中定义的title动态替换
 	浏览器访问： http://127.0.0.1:5050/dist/views/home.html
 
 ###项目正式部署生成编译文件
