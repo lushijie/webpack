@@ -2,27 +2,22 @@
 * @Author: lushijie
 * @Date:   2016-03-03 14:30:52
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-09-29 15:54:59
+* @Last Modified time: 2016-11-11 17:59:39
 */
 import 'rjs/common/common.js';
 import 'rcss/page/home.scss';
-// 方法1： 引入 node_module中的类库,可以使用providePlugin引入
-// 方法2： import $ from 'jquery';
 
 var img = document.createElement('img');
 img.src = require('rimg/home/catxiu.png');
 $('body').append(img);
 
 var mock = require('mock/data.json');
-console.log(mock);
+console.log('json loader 加载 mock 数据:', mock);
 
-//definePluginCnf
-console.log('definePlugin import -->', DEFINE_INJECT);
+console.log('definePlugin 注入环境变量：', ENV_VAR);
 
-//1.providePlugin
-console.log('jquery引入测试,$(window).width()=', $(window).width());
+console.log('providePlugin 注入类库：', $(window).width());
 
-//2.imports-loader
-console.log('imports-loader Object -->', importObj);//对象
-console.log('imports-loader Variable -->', importVar);//变量
-console.log('import-loader Library -->', importLib(window).width());//module
+console.log('imports 注入对象：', importObj);//对象
+console.log('imports 注入变量：', importVar);//变量
+console.log('imports 注入类库  ', jq(window).width());//module

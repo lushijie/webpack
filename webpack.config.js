@@ -2,57 +2,17 @@
 * @Author: lushijie
 * @Date:   2016-02-25 15:33:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-11-07 10:17:01
+* @Last Modified time: 2016-11-11 17:57:40
 */
 var webpack = require('webpack');
 var path = require('path');
-var moment = require('moment');
+var setting = require('./webpack.setting.js');
 var Pconf = require('./webpack.plugin.conf.js');
 
-var isDev = JSON.parse(JSON.stringify(process.env.NODE_ENV || 'development')) == 'development';
-
-var DEFINE_INJECT = {
-    ENV:{
-        'a': JSON.stringify('development variable'),
-        //替换规则是 API_URL = 后面的值，所以要添加 JSON.stringify
-        'API_URL': JSON.stringify('http://localhost/url'),
-        //Please keep process.env
-        'process.env': {
-            //Note: by default, React will be in development mode, which is slower, and not advised for production.
-            NODE_ENV: JSON.stringify('development')
-        }
-    },
-    PUB:{
-        'a': 123123,
-        'API_URL': JSON.stringify('http://online/url'),
-        //Please keep process.env
-        'process.env': {
-            NODE_ENV: JSON.stringify('production')
-        }
-    }
-};
-var definePluginOptions = {DEFINE_INJECT: DEFINE_INJECT[isDev ? 'ENV':'PUB']};
-var bannerPluginOptions = 'This file is modified by lushijie at ' + moment().format('YYYY-MM-DD h:mm:ss');
-var htmlPluginOptions = {
-        filename: 'views/home.html',// 访问地址 http://127.0.0.1:5050/dist/views/home.html
-        title: 'Webpack-Seed',
-        hash: true,
-        inject: false, //此时不注入相关的js,否则如果之前手动引入了js，可能导致重复引入
-        template: path.resolve(__dirname,'src/views/home.html'),
-        favicon:path.resolve(__dirname,'src/img/common/favicon.ico'),
-        minify:{
-            removeComments: false,
-            collapseWhitespace: false,
-            minifyCSS: false
-        },
-        //chunks: ['common','home'],
-        //excludeChunks: ['','']
-};
-
 module.exports = {
-    //dev = cheap-module-eval-source-map
+    //dev = cheap-module-eval-source-map 编译快但是不利于错误信息定位
     //online = cheap-module-source-map, 没有列信息,外联.map这样.map文件只会在F12开启时进行下载
-    devtool: isDev ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
+    devtool: setting.isDev ? 'inline-source-map' : 'cheap-module-source-map',
 
     //基础目录（绝对路径），entry根据此路径进行解析
     context: __dirname,
@@ -72,11 +32,13 @@ module.exports = {
 
     entry: {
         home: './src/js/page/home.js',
-        vendor: [
+        /** 废弃---
+        //vendor: [
             //'jquery'
             // 1. vendor 引入主要是为了提取各个模块的common部分, 此处（home,jquery 会提取common,生成common.js）, 不用vendor,jquery会被单独打入home.js不利于缓存.
             //2. 在页面中引入vendor.bundle.js不意味着将jquery主动注入了，依然需要providePlugin支持或者在各个模块手动require方式引入
-        ]
+        //]
+        ---**/
     },
     output: {
         publicPath: '/dist/',//webpack-dev-server会使用改路径寻找output文件
@@ -88,11 +50,7 @@ module.exports = {
         preLoaders: [
             {
                 test: /\.jsx?$/,
-                exclude: /node_modules/,
-                // include: [
-                //     path.join(__dirname, "public/resource/js/page"),
-                //     path.join(__dirname, "public/resource/js/common")
-                // ],
+                exclude: /node_modules/, // 还可以定义 include
                 loader: 'eslint-loader'
             }
         ],
@@ -100,7 +58,7 @@ module.exports = {
             {
                 //通过imports-loader向特定模块注入变量，注入模块
                 test: path.join(__dirname, 'src/js/page/home.js'),
-                loader: "imports?importLib=jquery,importVar=>'variable',importObj=>{size:50}"
+                loader: "imports?jq=jquery,importVar=>'variable',importObj=>{size:50}"
             },
             {
                 //1.css文件外联方式实现
@@ -109,7 +67,7 @@ module.exports = {
 
                 //2.css文件内联方式实现
                 test:/\.css$/,
-                loader: (NODE_ENV == 'development') ? "style!css?sourceMap!postcss?sourceMap" : "style!css!postcss"
+                loader: setting.isDev ? "style!css?sourceMap!postcss?sourceMap" : "style!css!postcss"
                 //1.可以通过 postcss-js 插件处理写在 js 中的样式loader: "style-loader!css-loader!postcss-loader?parser=postcss-js"
                 //2.也可以通过 babel 结合 postcss-js 处理 es6 语法中的样式loader: "style-loader!css-loader!postcss-loader?parser=postcss-js!babel"
             },
@@ -120,7 +78,7 @@ module.exports = {
 
                 //2.scss 样式文件内敛方式实现
                 test:/\.scss$/,
-                loader: (NODE_ENV == 'development') ? "style!css?sourceMap!postcss?sourceMap!sass?sourceMap" : "style!css!postcss!sass"
+                loader: setting.isDev ? "style!css?sourceMap!postcss?sourceMap!sass?sourceMap" : "style!css!postcss!sass"
             },
             {
                 //图片如果小于8192kb将会以base64形式存在，否则产生图片文件
@@ -151,20 +109,24 @@ module.exports = {
         ]
     },
     plugins: [
-        Pconf.cleanPluginConf(['dist']),
-        Pconf.bannerPluginConf(bannerPluginOptions),
-        Pconf.definePluginConf(definePluginOptions),
-        !isDev ? Pconf.uglifyJsPluginConf() : Pconf.noopPluginConf(),
+        //Pconf.cleanPluginConf(['dist']),
+        Pconf.bannerPluginConf(setting.bannerPluginOptions),
+        Pconf.definePluginConf(setting.definePluginOptions),
+        !setting.isDev ? Pconf.uglifyJsPluginConf() : Pconf.noopPluginConf(),
         Pconf.extractTextPluginConf(),
         Pconf.commonsChunkPluginConf(),
-        !isDev ? Pconf.minChunkSizePluginConf() : Pconf.noopPluginConf(),
-        isDev  ? Pconf.hotModuleReplacementPluginConf() : Pconf.noopPluginConf(),
-        !isDev ? Pconf.OccurrenceOrderPluginConf() : Pconf.noopPluginConf(),
-        !isDev ? Pconf.dedupePluginConf() : Pconf.noopPluginConf(),
+        !setting.isDev ? Pconf.minChunkSizePluginConf() : Pconf.noopPluginConf(),
+        setting.isDev  ? Pconf.hotModuleReplacementPluginConf() : Pconf.noopPluginConf(),
+        !setting.isDev ? Pconf.OccurrenceOrderPluginConf() : Pconf.noopPluginConf(),
+        !setting.isDev ? Pconf.dedupePluginConf() : Pconf.noopPluginConf(),
         Pconf.providePluginConf({
             $: 'jquery'
         }),
-        Pconf.htmlWebPackPluginConf(htmlPluginOptions),
+        Pconf.htmlWebPackPluginConf(setting.htmlPluginOptions),
+        new webpack.DllReferencePlugin({
+          context: __dirname,
+          manifest: require('./manifest.json'),
+        }),
         //Pconf.transferWebpackPluginConf()
     ],
     resolve:{

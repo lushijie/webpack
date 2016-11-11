@@ -5,20 +5,22 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run dev",
-    "mac": "npm run dev",
-    "premac": "npm run chrome",
-    "chrome": "open /Applications/Google' 'Chrome.app/ http://127.0.0.1:5050/dist/views/home.html",
+    "predev": " [ -f dist/vendor.bundle.js ] || webpack --config=webpack.dll.conf.js --progress --profile",
     "dev": "export NODE_ENV=development && webpack-dev-server --progress --profile ",
+    "predebug": "webpack --config=webpack.dll.conf.js --progress --profile",
     "debug": "export NODE_ENV=development && webpack",
+    "prerelease": "webpack --config=webpack.dll.conf.js --progress --profile",
     "release": "NODE_ENV=production webpack --progress --profile"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-polyfill": "^6.16.0",
     "babel-runtime": "^6.11.6",
+    "classnames": "^2.2.5",
     "jquery": "^2.2.1",
     "json-loader": "^0.5.4",
-    "moment": "^2.15.1"
+    "moment": "^2.16.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.1",
