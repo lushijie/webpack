@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-04 11:28:41
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-11-11 18:24:03
+* @Last Modified time: 2016-11-11 18:35:29
 */
 var webpack = require('webpack');
 var path = require('path');
@@ -16,10 +16,10 @@ var TransferWebpackPlugin = require('transfer-webpack-plugin');
 module.exports = {
 
   //为打包之后的各个文件添加说明头部
-  'bannerPluginConf': function (options) {
-    options = options || 'This file last modified is at ' + moment().format('YYYY-MM-DD h:mm:ss');
+  'bannerPluginConf': function (bannerText) {
+    bannerText = bannerText || 'This file last modified is at ' + moment().format('YYYY-MM-DD h:mm:ss');
     return (
-      new webpack.BannerPlugin(options)
+      new webpack.BannerPlugin(bannerText)
     )
   },
 
@@ -50,27 +50,16 @@ module.exports = {
     };
     options = objectAssign(optionsDefault, options);
     return (
-        new webpack.optimize.CommonsChunkPlugin(options)
+      new webpack.optimize.CommonsChunkPlugin(options)
     )
   },
 
   // 把相似的chunks和files合并来更好的缓存
   'dedupePluginConf': function() {
     return (
-        new webpack.optimize.DedupePlugin()
+      new webpack.optimize.DedupePlugin()
     )
   },
-
-  //常用并且不常变化的打包成dll引入
-  'dllPluginConf': function(options) {
-    options = objectAssign({
-      context: __dirname,
-      manifest: require('./manifest.json'),
-    }, options);
-    return (
-        new webpack.DllReferencePlugin(options)
-    )
-  }
 
   //definePlugin 会把定义的string 变量插入到所有JS代码中
   //注意与providePluginConf的区分
@@ -85,12 +74,23 @@ module.exports = {
     )
   },
 
+  //常用并且不常变化的打包成dll引入
+  'dllPluginConf': function(options) {
+    options = objectAssign({
+      context: __dirname,
+      manifest: require('./manifest.json'),
+    }, options);
+    return (
+      new webpack.DllReferencePlugin(options)
+    )
+  },
+
   //css 以文件类型引入而不再内嵌到HTML中
   'extractTextPluginConf': function(fileName, options) {
     fileName = fileName || "[name].bundle.css";
     options = objectAssign({}, options);
     return (
-        new ExtractTextPlugin(fileName, options)
+      new ExtractTextPlugin(fileName, options)
     )
   },
 
@@ -122,7 +122,7 @@ module.exports = {
   //noop plugin
   'noopPluginConf': function() {
     return (
-        function() {}
+      function() {}
     )
   },
 
@@ -145,11 +145,11 @@ module.exports = {
   },
 
   //文件拷贝插件
-  'transferWebpackPluginConf': function(froms, basePath) {
+  'transferWebpackPluginConf': function(froms, cwd) {
     froms = froms || [];
-    basePath = basePath || path.join(__dirname, 'dist');
+    cwd = cwd || path.join(__dirname, 'dist');
     return (
-      new TransferWebpackPlugin(froms, basePath)
+      new TransferWebpackPlugin(froms, cwd)
     )
   },
 
@@ -163,7 +163,7 @@ module.exports = {
     };
     options = objectAssign(optionsDefault, options);
     return (
-        new webpack.optimize.UglifyJsPlugin(options)
+      new webpack.optimize.UglifyJsPlugin(options)
     )
   }
 }
