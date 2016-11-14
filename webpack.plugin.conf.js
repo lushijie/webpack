@@ -1,9 +1,9 @@
 /*
-* @Author: lushijie
-* @Date:   2016-03-04 11:28:41
-* @Last Modified by:   lushijie
-* @Last Modified time: 2016-11-11 18:35:29
-*/
+ * @Author: lushijie
+ * @Date:   2016-03-04 11:28:41
+ * @Last Modified by:   lushijie
+ * @Last Modified time: 2016-11-14 11:54:41
+ */
 var webpack = require('webpack');
 var path = require('path');
 var moment = require('moment');
@@ -16,7 +16,7 @@ var TransferWebpackPlugin = require('transfer-webpack-plugin');
 module.exports = {
 
   //为打包之后的各个文件添加说明头部
-  'bannerPluginConf': function (bannerText) {
+  'bannerPluginConf': function(bannerText) {
     bannerText = bannerText || 'This file last modified is at ' + moment().format('YYYY-MM-DD h:mm:ss');
     return (
       new webpack.BannerPlugin(bannerText)
@@ -33,7 +33,7 @@ module.exports = {
     paths = paths || ['dist'];
     options = objectAssign(optionsDefault, options);
     return (
-      new CleanPlugin(paths , options)
+      new CleanPlugin(paths, options)
     )
   },
 
@@ -66,7 +66,7 @@ module.exports = {
   'definePluginConf': function(options) {
     options = objectAssign({
       "process.env": {
-          NODE_ENV: JSON.stringify("production")
+        NODE_ENV: JSON.stringify("production")
       }
     }, options);
     return (
@@ -153,13 +153,13 @@ module.exports = {
     )
   },
 
-   //js压缩组件
+  //js压缩组件
   'uglifyJsPluginConf': function(options) {
     var optionsDefault = {
-        compress: {
-            warnings: false
-        },
-        except: ['$super', '$', 'exports', 'require']
+      compress: {
+        warnings: false
+      },
+      except: ['$super', '$', 'exports', 'require']
     };
     options = objectAssign(optionsDefault, options);
     return (
