@@ -2,12 +2,14 @@
  * @Author: lushijie
  * @Date:   2016-02-25 15:33:13
  * @Last Modified by:   lushijie
- * @Last Modified time: 2016-11-17 18:37:36
+ * @Last Modified time: 2016-11-20 10:13:20
  */
 var webpack = require('webpack');
 var path = require('path');
 var setting = require('./webpack.setting.js');
 var Pconf = require('./webpack.plugin.conf.js');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+
 
 module.exports = {
   devtool: setting.isDev ? 'inline-source-map' : 'cheap-module-source-map',
@@ -36,7 +38,8 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        // loader: Pconf.extractTextPluginConf.extract(['css','sass'])
+        loader: Pconf.extractTextPluginConf.extract(['css','sass'])
+        //loader: ExtractTextPlugin.extract('style', ['css', 'postcss'])
         loader: setting.isDev ? "style!css?sourceMap!postcss?sourceMap!sass?sourceMap" : "style!css!postcss!sass"
       },
       {
@@ -111,9 +114,7 @@ module.exports = {
     //     ]
     // }
   },
-  // postcss: function() {
-  //   return {
-  //     plugins: [require('precss'), require('autoprefixer')]
-  //   }
+  // postcss: function () {
+  //   return [require('precss'), require('cssnext')];
   // }
 };
