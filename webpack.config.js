@@ -2,7 +2,7 @@
  * @Author: lushijie
  * @Date:   2016-02-25 15:33:13
  * @Last Modified by:   lushijie
- * @Last Modified time: 2016-11-20 12:29:46
+ * @Last Modified time: 2016-11-20 13:31:31
  */
 var webpack = require('webpack');
 var path = require('path');
@@ -37,8 +37,7 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        loader: Pconf.extractTextPluginConf.extract(['css','sass'])
-        //loader: ExtractTextPlugin.extract('style', ['css', 'postcss'])
+        //loader: ExtractTextPlugin.extract(['css', 'postcss'])
         loader: setting.isDev ? "style!css?sourceMap!postcss?sourceMap!sass?sourceMap" : "style!css!postcss!sass"
       },
       {
