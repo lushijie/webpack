@@ -2,7 +2,7 @@
  * @Author: lushijie
  * @Date:   2016-11-11 16:28:28
  * @Last Modified by:   lushijie
- * @Last Modified time: 2016-11-14 11:54:33
+ * @Last Modified time: 2016-12-15 09:15:02
  */
 
 var path = require('path');
@@ -31,7 +31,7 @@ module.exports = {
   cache: true,
   devtool: 'cheap-module-source-map',
   output: {
-    path: `${base}/dist`,
+    path: path.join(__dirname, '..','dist'),
     library: '[name]_[chunkhash]',
     filename: '[name].bundle.js',
   },
@@ -40,7 +40,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DllPlugin({
-      path: 'manifest.json',
+      path: path.join(__dirname, 'manifest.json'),
       name: '[name]_[chunkhash]',
       context: __dirname,
     }),

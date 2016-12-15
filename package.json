@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run dev",
-    "predev": " [ -f dist/vendor.bundle.js ] || webpack --config=webpack.dll.conf.js --progress --profile",
+    "predev": " [ -f dist/vendor.bundle.js ] || webpack --config=./webpack/webpack.dll.conf.js --progress --profile",
     "dev": "export NODE_ENV=development && webpack-dev-server --progress --profile ",
-    "predebug": "webpack --config=webpack.dll.conf.js --progress --profile",
+    "predebug": "webpack --config=./webpack/webpack.dll.conf.js --progress --profile",
     "debug": "export NODE_ENV=development && webpack",
-    "prerelease": "webpack --config=webpack.dll.conf.js --progress --profile",
+    "prerelease": "webpack --config=./webpack/webpack.dll.conf.js --progress --profile",
     "release": "NODE_ENV=production webpack --progress --profile"
   },
   "author": "",

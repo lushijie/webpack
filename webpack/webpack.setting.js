@@ -2,7 +2,7 @@
  * @Author: lushijie
  * @Date:   2016-11-11 17:20:12
  * @Last Modified by:   lushijie
- * @Last Modified time: 2016-11-14 11:54:48
+ * @Last Modified time: 2016-12-15 09:17:06
  */
 var path = require('path');
 var moment = require('moment');
@@ -34,8 +34,8 @@ var htmlPluginOptions = {
   title: 'Webpack-Seed',
   hash: true,
   inject: false, //此时不注入相关的js,否则如果之前手动引入了js，可能导致重复引入
-  template: path.resolve(__dirname, 'src/views/home.html'),
-  favicon: path.resolve(__dirname, 'src/img/common/favicon.ico'),
+  template: path.resolve(__dirname, '..' ,'src/views/home.html'),
+  //favicon: path.resolve(__dirname, '..' ,'src/img/common/favicon.ico'),
   minify: {
     removeComments: false,
     collapseWhitespace: false,
