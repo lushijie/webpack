@@ -2,7 +2,7 @@
  * @Author: lushijie
  * @Date:   2016-03-04 11:28:41
  * @Last Modified by:   lushijie
- * @Last Modified time: 2016-11-14 11:54:41
+ * @Last Modified time: 2017-01-12 09:47:24
  */
 var webpack = require('webpack');
 var path = require('path');
@@ -54,7 +54,7 @@ module.exports = {
     )
   },
 
-  // 把相似的chunks和files合并来更好的缓存
+  // 相同类库可能引用相同的模块，相同的模块只引用一次
   'dedupePluginConf': function() {
     return (
       new webpack.optimize.DedupePlugin()
