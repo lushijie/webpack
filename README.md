@@ -11,3 +11,7 @@
 
 ###项目正式部署生成编译文件
 	npm run release
+
+
+###webpack2配置请参考项目
+  https://github.com/wd4blue/react-reflux-boilerplate
