@@ -14,4 +14,4 @@
 
 
 ###webpack2配置请参考项目
-  https://github.com/wd4blue/react-reflux-boilerplate
+  https://github.com/lushijie/react-reflux-boilerplate
