@@ -2,29 +2,16 @@
  * @Author: lushijie
  * @Date:   2016-11-11 16:28:28
  * @Last Modified by:   lushijie
- * @Last Modified time: 2016-12-15 09:15:02
+ * @Last Modified time: 2017-05-12 19:18:30
  */
 
-var path = require('path');
-var webpack = require('webpack');
-var base = path.join(__dirname);
+let path = require('path');
+let webpack = require('webpack');
 
-var vendors = [
-  //'autobind-decorator',
+let vendors = [
   'babel-polyfill',
   'classnames',
-  'moment',
-  //'react',
-  //'react-dom',
-  //'react-router',
-  //'reqwest',
-  //'rc-select',
-  //'react-mixin',
-  //'tiny-cookie'
-  //'reflux',
-  //'react-bootstrap',
-  //'react-bootstrap-validation',
-  //'react-datetime',
+  'moment'
 ];
 
 module.exports = {

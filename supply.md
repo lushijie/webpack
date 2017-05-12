@@ -25,6 +25,6 @@
     chunkFilename: //当时entry使用对象形式时，[hash]不可以使用，[id]、[chunkhash]与[name]可以使用
 
   5. postcss-js
-    1.可以通过 postcss-js 插件处理写在 js 中的样式loader: "style-loader!css-loader!postcss-loader?parser=postcss-js"
-    2.也可以通过 babel 结合 postcss-js 处理 es6 语法中的样式loader: "style-loader!css-loader!postcss-loader?parser=postcss-js!babel"
+    1.可以通过 postcss-js 插件处理写在 js 中的样式, loader: "style-loader!css-loader!postcss-loader?parser=postcss-js"
+    2.也可以通过 babel 结合 postcss-js 处理 es6 语法中的样式, loader: "style-loader!css-loader!postcss-loader?parser=postcss-js!babel"
 

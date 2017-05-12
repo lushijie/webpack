@@ -2,16 +2,17 @@
  * @Author: lushijie
  * @Date:   2016-02-25 15:33:13
  * @Last Modified by:   lushijie
- * @Last Modified time: 2016-12-15 09:14:18
+ * @Last Modified time: 2017-05-12 19:46:49
  */
-var webpack = require('webpack');
-var path = require('path');
-var setting = require('./webpack/webpack.setting.js');
-var Pconf = require('./webpack/webpack.plugin.conf.js');
-//var ExtractTextPlugin = require("extract-text-webpack-plugin");
+let webpack = require('webpack');
+let path = require('path');
+let OPTIONS = require('./webpack/webpack.options.js');
+let PLUGINS = require('./webpack/webpack.plugins.js');
+let argv = require('yargs').argv;
+const isDev = (argv.env === 'development');
 
-module.exports = {
-  devtool: setting.isDev ? 'inline-source-map' : 'cheap-module-source-map',
+let workflow = {
+  devtool: isDev ? 'inline-source-map' : 'cheap-module-source-map',
   context: __dirname,
   entry: {
     home: './src/js/page/home.js'
@@ -37,8 +38,7 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        //loader: ExtractTextPlugin.extract(['css', 'postcss'])
-        loader: setting.isDev ? "style!css?sourceMap!postcss?sourceMap!sass?sourceMap" : "style!css!postcss!sass"
+        loader: isDev ? "style!css?sourceMap!postcss?sourceMap!sass?sourceMap" : "style!css!postcss!sass"
       },
       {
         test: /\.(png|jpg|gif|ttf|eot|svg|woff|woff2)$/,
@@ -66,13 +66,12 @@ module.exports = {
     ]
   },
   plugins: [
-    Pconf.definePluginConf(setting.definePluginOptions),
-    !setting.isDev ? Pconf.uglifyJsPluginConf() : Pconf.noopPluginConf(),
-    Pconf.commonsChunkPluginConf(),
-    setting.isDev ? Pconf.hotModuleReplacementPluginConf() : Pconf.noopPluginConf(),
-    Pconf.providePluginConf(setting.providePluginOptions),
-    Pconf.htmlWebPackPluginConf(setting.htmlPluginOptions),
-    Pconf.dllPluginConf(),
+    PLUGINS.definePluginConf(OPTIONS.definePluginOptions),
+    !isDev ? PLUGINS.uglifyJsPluginConf() : PLUGINS.noopPluginConf(),
+    PLUGINS.commonsChunkPluginConf(),
+    isDev ? PLUGINS.hotModuleReplacementPluginConf() : PLUGINS.noopPluginConf(),
+    PLUGINS.providePluginConf(OPTIONS.providePluginOptions),
+    PLUGINS.dllPluginConf(),
   ],
   resolve: {
     root: [
@@ -112,7 +111,11 @@ module.exports = {
     //     ]
     // }
   },
-  // postcss: function () {
-  //   return [require('precss'), require('cssnext')];
-  // }
+  postcss: function () {
+    return [require('precss'), require('cssnext')];
+  }
 };
+
+workflow.plugins = workflow.plugins.concat(PLUGINS.htmlWebPackPluginConf(OPTIONS.htmlPluginOptions));
+
+module.exports = workflow;

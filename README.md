@@ -10,8 +10,8 @@
   http://127.0.0.1:5050/dist/views/home.html
 
 ###项目正式部署生成编译文件
-	npm run release
+	npm run online
 
 
 ###webpack2配置请参考项目
-  https://github.com/lushijie/react-reflux-boilerplate
+  https://github.com/lushijie/6to5

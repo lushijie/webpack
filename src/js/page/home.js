@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-03-03 14:30:52
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-11-11 17:59:39
+* @Last Modified time: 2017-05-12 19:45:12
 */
 import 'rjs/common/common.js';
 import 'rcss/page/home.scss';
@@ -14,7 +14,7 @@ $('body').append(img);
 var mock = require('mock/data.json');
 console.log('json loader 加载 mock 数据:', mock);
 
-console.log('definePlugin 注入环境变量：', ENV_VAR);
+console.log('definePlugin 注入环境变量11：', ENV_VAR);
 
 console.log('providePlugin 注入类库：', $(window).width());
 
